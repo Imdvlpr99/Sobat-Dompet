@@ -121,7 +121,7 @@ class UserDataView : BaseActivity() {
                 override fun onInputClicked() {
                     showDatePicker(supportFragmentManager, object : DatePickerListener {
                         override fun onDateSelected(s: String) {
-                            register.dateOfBirth = s.toString()
+                            register.dateOfBirth = s
                             binding.dateOfBirth.setText(s)
                             validateInput()
                         }
@@ -131,7 +131,7 @@ class UserDataView : BaseActivity() {
         }
 
         binding.registerBtn.setOnClickListener {
-            startActivity(OtpView.intentRegister(this, register))
+            startActivity(OtpView.intentRegister(this, register, OtpView.Companion.TYPE.REGISTER))
         }
     }
 

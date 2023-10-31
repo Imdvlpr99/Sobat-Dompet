@@ -7,6 +7,8 @@
     <string name="onboarding_sub_title_2">Atur semua pengeluaran dan pemasukan dari semua akun rekening dan e-wallet Anda kini jadi lebih mudah</string>
     <string name="onboarding_sub_title_3">Nikmati kemudahan dalam mengatur seluruh akun rekening dan e-wallet dalam satu aplikasi</string>
     <string name="login_text">Masuk</string>
+    <string name="login_title">Selamat Datang kembali</string>
+    <string name="login_desc">Masukkan nomor handphone yang sudah kamu daftarkan</string>
     <string name="register_text">Daftar</string>
     <string name="getting_started">Mulai Sekarang</string>
     <string name="getting_started_title">Mulai kemudahan dalam bertransaksi sekarang juga</string>
