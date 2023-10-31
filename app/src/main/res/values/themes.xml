@@ -1,9 +1,99 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.ExpenseTracker" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ExpenseTracker" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="android:textColorHighlight">@android:color/transparent</item>
+        <item name="android:statusBarColor" >@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="Theme.ExpenseTracker" parent="Base.Theme.ExpenseTracker" />
+
+    <style name="MaterialCalendarStyle" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <item name="materialCalendarHeaderLayout">@style/App.Material3.MaterialCalendar.HeaderLayout</item>
+    </style>
+
+    <style name="App.Material3.MaterialCalendar.HeaderLayout" parent="@style/Widget.Material3.MaterialCalendar.HeaderLayout">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="MaterialCalendar.YearNavigation" parent="Widget.Material3.MaterialCalendar.YearNavigationButton">
+        <item name="materialCalendarYearNavigationButton">@drawable/ic_chevron_down</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="DialogSlideAnimFullWidth" parent="Theme.Material3.Dark.Dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+        <item name="windowFixedWidthMajor">90%</item>
+        <item name="windowFixedWidthMinor">90%</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
+    </style>
+    
+    <style name="MaterialButton" />
+    <style name="MaterialButton.Style">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorOnSurface">@android:color/darker_gray</item>
+    </style>
+
+    <style name="TextView" />
+    <style name="TextView.Bold18sp">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextView.Bold28sp">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+    <style name="TextView.Semibold14sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextView.Semibold16sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextView.Semibold18sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextView.Semibold24sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="TextView.Semibold26sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+    <style name="TextView.Semibold28sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+    <style name="TextView.Semibold30sp">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+    <style name="TextView.Regular14sp">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextView.Regular16sp">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextView.Regular18sp">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
