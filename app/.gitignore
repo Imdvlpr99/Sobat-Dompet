@@ -2,3 +2,8 @@
 google-services.json
 misc.xml
 gradle.properties
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
