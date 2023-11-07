@@ -56,6 +56,7 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
                     true -> view?.onSuccessCheckUsers(response)
                     false -> view?.onFailed(response.message)
                 }
+                dispatchGroup?.leave()
             }, 2000)
         }
     }
@@ -71,6 +72,7 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
                     true -> view?.onSuccessRegister()
                     false -> view?.onFailed(response.message)
                 }
+                dispatchGroup?.leave()
             }, 2000)
         }
     }
