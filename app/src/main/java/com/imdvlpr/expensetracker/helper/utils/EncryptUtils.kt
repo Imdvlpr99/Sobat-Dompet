@@ -26,14 +26,14 @@ fun Context.decrypt(encryptedData: String): String {
     return String(decryptedBytes, Charsets.UTF_8)
 }
 
-fun convertPublicKey(publicKeyString: String): PublicKey {
+private fun convertPublicKey(publicKeyString: String): PublicKey {
     val publicKeyBytes = Base64.decode(publicKeyString, Base64.DEFAULT)
     val keyFactory = KeyFactory.getInstance("RSA")
     val keySpec = X509EncodedKeySpec(publicKeyBytes)
     return keyFactory.generatePublic(keySpec)
 }
 
-fun convertPrivateKey(privateKeyString: String): PrivateKey {
+private fun convertPrivateKey(privateKeyString: String): PrivateKey {
     val privateKeyBytes = Base64.decode(privateKeyString, Base64.DEFAULT)
     val keyFactory = KeyFactory.getInstance("RSA")
     val keySpec = PKCS8EncodedKeySpec(privateKeyBytes)

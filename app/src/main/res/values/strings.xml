@@ -23,7 +23,7 @@
     <string name="password_confirm_hint">Masukkan konfirmasi kata sandi</string>
     <string name="register_title">Daftar</string>
     <string name="register_sub_title">Daftar pengguna baru dengan mengisi form berikut</string>
-    <string name="password_error">Kata sandi harus terdiri dari minimal 5 karakter dan maksimal 10 karakter dengan kombinasi huruf dan angka</string>
+    <string name="password_error">Kata sandi harus terdiri dari minimal 5 karakter dan maksimal 15 karakter dengan kombinasi huruf dan angka</string>
     <string name="password_confirm_error">Kata sandi tidak cocok</string>
     <string name="phone_error">Nomor handphone harus terdiri dari minimal 12 angka dan maksimal 13 angka</string>
     <string name="continue_text">Lanjutkan</string>
@@ -52,4 +52,27 @@
     <string name="register_date_of_birth_hint">Masukkan tanggal lahir Anda</string>
     <string name="personal_info_title">Tambahkan informasi pribadi Anda</string>
     <string name="personal_info_sub_title">Informasi ini dibutuhkan untuk melengkapi proses registrasi Anda</string>
+    <string name="internal_server_error">Internal Server Error</string>
+    <string name="response_error_title">Permintaan gagal :(</string>
+    <string name="response_error_desc">Permintaan kamu belum bisa diproses, coba lagi ya</string>
+    <string name="response_success_title">Permintaan berhasil :)</string>
+    <string name="response_success_desc">Permintaan kamu berhasil nih, yuk lanjut ke proses selanjutnya</string>
+    <string name="response_button_back">Kembali</string>
+    <string name="response_button_next">Lanjut</string>
+    <string name="response_button_ok">Oke</string>
+    <string name="response_otp_success">Autentikasi berhasil</string>
+    <string name="response_otp_resend_success">Kode OTP udah dikirim ulang nih, coba cek WhatsApp kamu yaa</string>
+    <string name="response_otp_register_success_desc">Registrasi dan autentikasi nya berhasil nih, yuk lanjut login</string>
+    <string name="response_register_registered">Email atau nomor handphone sudah terdaftar nih, coba login atau gunakan email atau nomor handphone yang berbeda</string>
+    <string name="response_register_available">Email atau nomor handphone tersedia, yuk lanjutin pendaftaran akun nya</string>
+    <string name="response_register_phone_registered">Nomor handphone telah terdaftar</string>
+    <string name="response_register_phone_available">Nomor handphone tersedia, silahkan lanjut ke proses selanjutnya</string>
+    <string name="repsponse_register_check_success">Pengecekan data sukses</string>
+    <string name="response_register_email_registered">Email telah terdaftar</string>
+    <string name="response_register_username_registered">Username telah terdaftar</string>
+    <string name="response_register_success">Berhasil registrasi</string>
+    <string name="response_register_failed">Gagal registrasi</string>
+    <string name="response_login_already_login">Akun telah login di perangkat lain</string>
+    <string name="response_login_not_registered">Akun tidak terdaftar</string>
+    <string name="response_login_success">Login akun berhasil</string>
 </resources>

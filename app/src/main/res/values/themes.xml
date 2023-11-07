@@ -24,10 +24,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="DialogSlideAnimFullWidth" parent="Theme.Material3.Dark.Dialog">
+    <style name="DialogSlideAnimFullWidth" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
-        <item name="windowFixedWidthMajor">90%</item>
-        <item name="windowFixedWidthMinor">90%</item>
+        <item name="windowFixedWidthMajor">70%</item>
+        <item name="windowFixedWidthMinor">70%</item>
     </style>
 
     <style name="DialogAnimation">

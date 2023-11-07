@@ -19,6 +19,12 @@ class LoginView : BaseActivity() {
         fun newIntent(context: Context): Intent {
             return Intent(context, LoginView::class.java)
         }
+
+        fun intentRegister(context: Context): Intent {
+            val intent = Intent(context, LoginView::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            return intent
+        }
     }
 
     private lateinit var binding: ActivityLoginBinding
@@ -53,6 +59,7 @@ class LoginView : BaseActivity() {
                         true -> setError(true, getString(R.string.phone_error))
                         false -> {
                             setError(false)
+                            login.phone = s.toString()
                             validateInput()
                         }
                     }
@@ -72,6 +79,7 @@ class LoginView : BaseActivity() {
                         true -> setError(true, getString(R.string.password_error))
                         false -> {
                             setError(false)
+                            login.password = s.toString()
                             validateInput()
                         }
                     }
@@ -80,8 +88,6 @@ class LoginView : BaseActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
-            login.phone = binding.inputPhone.getText()
-            login.password = binding.inputPassword.getText()
             startActivity(OtpView.intentLogin(this, login, OtpView.Companion.TYPE.LOGIN))
         }
     }

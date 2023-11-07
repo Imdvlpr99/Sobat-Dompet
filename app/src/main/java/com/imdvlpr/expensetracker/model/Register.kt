@@ -11,5 +11,7 @@ data class Register(
     var dateOfBirth: String = "",
     var phone: String = "",
     var userImage: String = "",
-    var password: String = ""
+    var password: String = "",
+    var messageId: Int = 0,
+    var expiredIn: Int = 0,
 ): Parcelable

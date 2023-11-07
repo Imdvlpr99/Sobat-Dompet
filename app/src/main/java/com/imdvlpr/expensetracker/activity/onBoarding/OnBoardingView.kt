@@ -70,6 +70,7 @@ class OnBoardingView : BaseActivity() {
 
         binding.gettingStartedBtn.setOnClickListener {
             startActivity(GettingStartedView.newIntent(this))
+            finish()
         }
     }
 

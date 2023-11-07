@@ -28,7 +28,7 @@ class SplashScreenView : BaseActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sessionManager = SharedPreference()
-        sessionManager.sessionManager(this)
+        sessionManager.sharedPreference(this)
         Log.d("test-decrypt", decrypt(encrypt("test encrypt")))
 
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
