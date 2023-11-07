@@ -17,15 +17,19 @@ import com.imdvlpr.expensetracker.helper.base.BaseActivity
 import com.imdvlpr.expensetracker.helper.ui.CustomInputView
 import com.imdvlpr.expensetracker.helper.ui.CustomInsertImage
 import com.imdvlpr.expensetracker.helper.ui.CustomToolbar
+import com.imdvlpr.expensetracker.helper.ui.responseDialog
+import com.imdvlpr.expensetracker.helper.utils.Constants
 import com.imdvlpr.expensetracker.helper.utils.DatePickerListener
 import com.imdvlpr.expensetracker.helper.utils.encodeImage
 import com.imdvlpr.expensetracker.helper.utils.getParcelable
 import com.imdvlpr.expensetracker.helper.utils.getStatusBarHeight
 import com.imdvlpr.expensetracker.helper.utils.showDatePicker
+import com.imdvlpr.expensetracker.model.OTP
 import com.imdvlpr.expensetracker.model.Register
+import com.imdvlpr.expensetracker.model.StatusResponse
 import java.io.InputStream
 
-class UserDataView : BaseActivity() {
+class UserDataView : BaseActivity(), AuthInterface {
 
     companion object {
 
@@ -39,6 +43,7 @@ class UserDataView : BaseActivity() {
     }
 
     private lateinit var binding: ActivityUserDataBinding
+    private lateinit var presenter: AuthPresenter
     private var register = Register()
     private var encodedImage: String? = null
 
@@ -46,6 +51,7 @@ class UserDataView : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        onAttach()
         initBundle()
         initView()
     }
@@ -78,8 +84,9 @@ class UserDataView : BaseActivity() {
 
         binding.fullName.apply {
             setTitle(getString(R.string.register_full_name))
-            setHint(getString(R.string.phone_hint))
+            setHint(getString(R.string.register_full_name_hint))
             setInputType(InputType.TYPE_CLASS_TEXT)
+            setInputFilter(CustomInputView.INPUT_FILTER.TEXT_ONLY)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     register.fullName = s.toString()
@@ -92,6 +99,7 @@ class UserDataView : BaseActivity() {
             setTitle(getString(R.string.register_user_name))
             setHint(getString(R.string.register_user_name_hint))
             setInputType(InputType.TYPE_CLASS_TEXT)
+            setInputFilter(CustomInputView.INPUT_FILTER.LOWERCASE_WITH_SPECIAL_CHAR)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     register.userName = s.toString()
@@ -121,7 +129,7 @@ class UserDataView : BaseActivity() {
                 override fun onInputClicked() {
                     showDatePicker(supportFragmentManager, object : DatePickerListener {
                         override fun onDateSelected(s: String) {
-                            register.dateOfBirth = s.toString()
+                            register.dateOfBirth = s
                             binding.dateOfBirth.setText(s)
                             validateInput()
                         }
@@ -131,7 +139,7 @@ class UserDataView : BaseActivity() {
         }
 
         binding.registerBtn.setOnClickListener {
-            startActivity(OtpView.intentRegister(this, register))
+            presenter.checkUsers(register)
         }
     }
 
@@ -155,5 +163,38 @@ class UserDataView : BaseActivity() {
                 validateInput()
             }
         }
+    }
+
+    override fun onSuccessCheckUsers(response: StatusResponse) {
+        if (!isFinishing) presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = register.phone))
+    }
+
+    override fun onSuccessSendOtp(data: OTP) {
+        if (!isFinishing) {
+            register.messageId = data.messageId
+            register.expiredIn = data.expiredIn
+            startActivity(OtpView.intentRegister(this, register, OtpView.Companion.TYPE.REGISTER))
+        }
+    }
+
+    override fun onProgress() {
+        if (!isFinishing) showProgress()
+    }
+
+    override fun onFinishProgress() {
+        if (!isFinishing) hideProgress()
+    }
+
+    override fun onFailed(message: String) {
+        if (!isFinishing) responseDialog(false, message)
+    }
+
+    override fun onAttach() {
+        presenter = AuthPresenter(this)
+        presenter.onAttach(this)
+    }
+
+    override fun onDetach() {
+        presenter.onDetach()
     }
 }

@@ -5,11 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class StatusResponse(
-    var isSuccess: Boolean = true,
-    var refNumber: String? = "",
-    var errorCode: String = "",
-    var status: String = "",
-    var message: String = "",
-    var api: String = "",
-    var isCanceled: Boolean = false
+    var isSuccess: Boolean = false,
+    var message: String = ""
 ) : Parcelable

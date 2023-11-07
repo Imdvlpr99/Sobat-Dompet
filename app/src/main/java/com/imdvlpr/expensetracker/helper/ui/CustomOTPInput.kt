@@ -12,7 +12,6 @@ import android.view.View.OnFocusChangeListener
 import android.view.View.OnTouchListener
 import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.imdvlpr.expensetracker.R
 import com.imdvlpr.expensetracker.databinding.LayoutOtpInputBinding
 import com.imdvlpr.expensetracker.helper.utils.SpannableListener
@@ -29,19 +28,19 @@ class CustomOTPInput: ConstraintLayout {
     private var listener: InputOTPListener? = null
 
     constructor(context: Context) : super(context) {
-        init(context, null)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(context, attrs)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context, attrs)
+        init(context)
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun init(context: Context, attrs: AttributeSet?) {
+    private fun init(context: Context) {
         binding = LayoutOtpInputBinding.bind(LayoutInflater.from(context).inflate(R.layout.layout_otp_input, this, true))
 
         binding.et1.onFocusChangeListener = onFocusChangeListener
@@ -65,7 +64,7 @@ class CustomOTPInput: ConstraintLayout {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private val touchListener = OnTouchListener { v, event ->
+    private val touchListener = OnTouchListener { v, _ ->
         v.requestFocus()
         true
     }

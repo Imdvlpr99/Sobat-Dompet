@@ -8,7 +8,7 @@ class SharedPreference {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var context: Context
 
-    fun sessionManager(context: Context) {
+    fun sharedPreference(context: Context) {
         this.context = context
         sharedPreferences = context.getSharedPreferences(Constants.PREF.PREF_NAME, Context.MODE_PRIVATE)
         editor = sharedPreferences.edit()
@@ -27,6 +27,11 @@ class SharedPreference {
 
     fun deleteFromPref(strKey: String) {
         editor.remove(strKey)
+        editor.apply()
+    }
+
+    fun clearPref() {
+        editor.clear()
         editor.apply()
     }
 

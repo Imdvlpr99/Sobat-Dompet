@@ -2,7 +2,9 @@ package com.imdvlpr.expensetracker.helper.ui
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
+import android.text.Spanned
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -18,19 +20,21 @@ class CustomInputView: ConstraintLayout {
     private var isPassword: Boolean = false
     private var listener: InputViewListener? = null
 
+    enum class INPUT_FILTER { UPPERCASE, LOWERCASE, TEXT_ONLY, UPPERCASE_WITH_SPECIAL_CHAR, LOWERCASE_WITH_SPECIAL_CHAR, PASSWORD}
+
     constructor(context: Context) : super(context) {
-        init(context, null)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(context, attrs)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context, attrs)
+        init(context)
     }
 
-    private fun init(context: Context, attrs: AttributeSet?) {
+    private fun init(context: Context) {
         binding = LayoutInputBinding.bind(LayoutInflater.from(context).inflate(R.layout.layout_input, this, true))
 
         binding.inputText.addTextChangedListener(textWatcher)
@@ -116,6 +120,67 @@ class CustomInputView: ConstraintLayout {
                 binding.inputLayout.background = ContextCompat.getDrawable(context, R.drawable.bg_input)
             }
         }
+    }
+
+    fun setInputFilter(inputFilter: INPUT_FILTER) {
+        val filter = object : InputFilter {
+            override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence? {
+                val textOnly = "[a-zA-Z\\s]+".toRegex()
+                val lowerCase = "[a-z\\s]+".toRegex()
+                val lowerCaseWithSpecialChar = "[a-z\\p{P}]+".toRegex()
+                val upperCase = "[A-Z\\s]+".toRegex()
+                val upperCaseWithSpecialChar = "[A-Z\\p{P}]+".toRegex()
+                val password = "[A-Za-z\\p{P}]+".toRegex()
+
+                when (inputFilter) {
+                    INPUT_FILTER.LOWERCASE -> {
+                        for (i in start until end) {
+                            if (!lowerCase.matches(source?.get(i).toString())) {
+                                return ""
+                            }
+                        }
+                    }
+                    INPUT_FILTER.UPPERCASE -> {
+                        for (i in start until end) {
+                            if (!upperCase.matches(source?.get(i).toString())) {
+                                return ""
+                            }
+                        }
+                    }
+                    INPUT_FILTER.TEXT_ONLY -> {
+                        for (i in start until end) {
+                            if (!textOnly.matches(source?.get(i).toString())) {
+                                return ""
+                            }
+                        }
+                    }
+                    INPUT_FILTER.LOWERCASE_WITH_SPECIAL_CHAR -> {
+                        for (i in start until end) {
+                            if (!lowerCaseWithSpecialChar.matches(source?.get(i).toString())) {
+                                return ""
+                            }
+                        }
+                    }
+                    INPUT_FILTER.UPPERCASE_WITH_SPECIAL_CHAR -> {
+                        for (i in start until end) {
+                            if (!upperCaseWithSpecialChar.matches(source?.get(i).toString())) {
+                                return ""
+                            }
+                        }
+                    }
+                    INPUT_FILTER.PASSWORD -> {
+                        for (i in start until end) {
+                            if (!password.matches(source?.get(i).toString())) {
+                                return ""
+                            }
+                        }
+                    }
+                }
+
+                return null
+            }
+        }
+        binding.inputText.filters = arrayOf(filter)
     }
 
     fun getText(): String {

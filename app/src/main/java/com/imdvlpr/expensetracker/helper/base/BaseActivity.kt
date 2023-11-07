@@ -2,8 +2,6 @@ package com.imdvlpr.expensetracker.helper.base
 
 import android.app.Dialog
 import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,13 +9,9 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.ConfigurationCompat
+import com.imdvlpr.expensetracker.R
 import com.imdvlpr.expensetracker.helper.utils.setLocale
 import com.imdvlpr.expensetracker.helper.utils.setWindowFlag
-import java.util.Locale
-
-
-
 
 open class BaseActivity: AppCompatActivity() {
 
@@ -36,7 +30,7 @@ open class BaseActivity: AppCompatActivity() {
         dialogProgress = Dialog(this)
         dialogProgress?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogProgress?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        //dialogProgress?.setContentView(R.layout.dialog_progress)
+        dialogProgress?.setContentView(R.layout.dialog_progress)
         val params = this.window.attributes
         params.x = 0
         params.y = 0

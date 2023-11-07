@@ -11,20 +11,19 @@ import android.os.Build
 import android.os.Parcelable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.style.BackgroundColorSpan
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Base64
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.imdvlpr.expensetracker.R
 import java.io.ByteArrayOutputStream
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -97,8 +96,15 @@ fun <T : Parcelable?> Intent.getParcelable(key: String, className: Class<T>): T?
         this.getParcelableExtra(key)
 }
 
+fun <T : Serializable?>Intent.getSerializable(key: String, className: Class<T>): T? {
+    return if (Build.VERSION.SDK_INT >= 33)
+        this.getSerializableExtra(key, className)
+    else
+        this.getSerializableExtra(key) as? T?
+}
+
 fun showDatePicker(supportFragmentManager: FragmentManager, listener: DatePickerListener? = null) {
-    var selectedDate = ""
+    var selectedDate: String
     val today = MaterialDatePicker.todayInUtcMilliseconds()
     val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
     calendar.timeInMillis = today

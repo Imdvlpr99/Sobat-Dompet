@@ -13,6 +13,8 @@ import com.imdvlpr.expensetracker.databinding.ActivitySplashScreenBinding
 import com.imdvlpr.expensetracker.helper.base.BaseActivity
 import com.imdvlpr.expensetracker.helper.utils.Constants
 import com.imdvlpr.expensetracker.helper.utils.SharedPreference
+import com.imdvlpr.expensetracker.helper.utils.decrypt
+import com.imdvlpr.expensetracker.helper.utils.encrypt
 
 
 @SuppressLint("CustomSplashScreen")
@@ -26,7 +28,8 @@ class SplashScreenView : BaseActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sessionManager = SharedPreference()
-        sessionManager.sessionManager(this)
+        sessionManager.sharedPreference(this)
+        Log.d("test-decrypt", decrypt(encrypt("test encrypt")))
 
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
             run {
