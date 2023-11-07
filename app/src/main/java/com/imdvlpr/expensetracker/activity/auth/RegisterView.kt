@@ -135,7 +135,7 @@ class RegisterView : BaseActivity(), AuthInterface {
     }
 
     override fun onFailed(message: String) {
-        if (!isFinishing) responseDialog(true, message, responseBtnText = getString(R.string.response_button_ok), listener = object : ResponseDialogListener {
+        if (!isFinishing) responseDialog(false, message, responseBtnText = getString(R.string.response_button_ok), listener = object : ResponseDialogListener {
             override fun onClick() {
                 binding.phoneEt.setError(true, message)
             }

@@ -38,8 +38,8 @@ fun Activity.responseDialog(isSuccess:Boolean, responseDesc: String, responseIco
     binding.alertIcon.setImageResource(responseIcon)
     binding.responseBtn.text = responseBtnText
     binding.responseBtn.setOnClickListener {
-        dialog.dismiss()
         listener?.onClick()
+        dialog.dismiss()
     }
     dialog.show()
 }

@@ -27,7 +27,7 @@ open class BaseActivity: AppCompatActivity() {
     }
 
     private fun initProgress() {
-        dialogProgress = Dialog(this)
+        dialogProgress = Dialog(this, R.style.FullScreenDialogTheme)
         dialogProgress?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogProgress?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogProgress?.setContentView(R.layout.dialog_progress)
