@@ -15,18 +15,18 @@ class CustomNumberPad: ConstraintLayout {
     private var listener: NumPadListener? = null
 
     constructor(context: Context) : super(context) {
-        init(context, null)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(context, attrs)
+        init(context)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(context, attrs)
+        init(context)
     }
 
-    private fun init(context: Context, attrs: AttributeSet?) {
+    private fun init(context: Context) {
         binding = LayoutNumberInputBinding.bind(LayoutInflater.from(context).inflate(R.layout.layout_number_input, this, true))
 
         binding.number0.setOnClickListener {

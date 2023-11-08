@@ -2,11 +2,11 @@ package com.imdvlpr.expensetracker.helper.ui
 
 import android.content.Context
 import android.text.Editable
-import android.text.InputFilter
 import android.text.InputType
 import android.text.Spanned
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Patterns
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -20,7 +20,7 @@ class CustomInputView: ConstraintLayout {
     private var isPassword: Boolean = false
     private var listener: InputViewListener? = null
 
-    enum class INPUT_FILTER { UPPERCASE, LOWERCASE, TEXT_ONLY, UPPERCASE_WITH_SPECIAL_CHAR, LOWERCASE_WITH_SPECIAL_CHAR, PASSWORD}
+    enum class InputFilter { UPPERCASE, LOWERCASE, TEXT_ONLY, UPPERCASE_WITH_SPECIAL_CHAR, LOWERCASE_WITH_SPECIAL_CHAR, PASSWORD, PHONE}
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -54,8 +54,13 @@ class CustomInputView: ConstraintLayout {
                 false -> listener?.onRightIndicatorClick()
             }
         }
-        binding.inputText.setOnClickListener {
+
+        binding.outputText.setOnClickListener {
             listener?.onInputClicked()
+        }
+
+        binding.helperText.setOnClickListener {
+            listener?.onHelperClicked()
         }
     }
 
@@ -78,13 +83,8 @@ class CustomInputView: ConstraintLayout {
         binding.titleName.text = title
     }
 
-    fun setIndicator(left: Boolean = false, right: Boolean = false) {
-        binding.leftIndicator.setVisible(left)
-        binding.rightIndicator.setVisible(right)
-    }
-
-    fun setLeftIndicatorIcon(icon: Int) {
-        binding.leftIndicator.setImageResource(icon)
+    fun setIndicator(visible: Boolean = false) {
+        binding.rightIndicator.setVisible(visible)
     }
 
     fun setRightIndicatorIcon(icon: Int, isVisible: Boolean) {
@@ -96,12 +96,36 @@ class CustomInputView: ConstraintLayout {
         this.isPassword = isPassword
     }
 
+    fun setHelper(visible: Boolean, text: String) {
+        binding.helperText.setVisible(visible)
+        binding.helperText.text = text
+    }
+
+    fun setSuffix(suffix: String) {
+        if (suffix.isNotEmpty()) {
+            binding.lblSuffix.text = suffix
+            binding.lblSuffix.toVisible()
+        }
+    }
+
     fun setHint(hint: String) {
         binding.inputText.hint = hint
+        binding.outputText.hint = hint
     }
 
     fun setInputType(type: Int) {
-        binding.inputText.inputType = type
+        if (type == InputType.TYPE_NULL) {
+            binding.inputText.setVisible(false)
+            binding.outputText.setVisible(true)
+        } else {
+            binding.inputText.setVisible(true)
+            binding.outputText.setVisible(false)
+            binding.inputText.inputType = type
+        }
+    }
+
+    fun isEmailValid(email: CharSequence): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     fun setListener(listener: InputViewListener) {
@@ -122,8 +146,8 @@ class CustomInputView: ConstraintLayout {
         }
     }
 
-    fun setInputFilter(inputFilter: INPUT_FILTER) {
-        val filter = object : InputFilter {
+    fun setInputFilter(inputFilter: InputFilter) {
+        val filter = object : android.text.InputFilter {
             override fun filter(source: CharSequence?, start: Int, end: Int, dest: Spanned?, dstart: Int, dend: Int): CharSequence? {
                 val textOnly = "[a-zA-Z\\s]+".toRegex()
                 val lowerCase = "[a-z\\s]+".toRegex()
@@ -133,46 +157,54 @@ class CustomInputView: ConstraintLayout {
                 val password = "[A-Za-z\\p{P}]+".toRegex()
 
                 when (inputFilter) {
-                    INPUT_FILTER.LOWERCASE -> {
+                    InputFilter.LOWERCASE -> {
                         for (i in start until end) {
                             if (!lowerCase.matches(source?.get(i).toString())) {
                                 return ""
                             }
                         }
                     }
-                    INPUT_FILTER.UPPERCASE -> {
+                    InputFilter.UPPERCASE -> {
                         for (i in start until end) {
                             if (!upperCase.matches(source?.get(i).toString())) {
                                 return ""
                             }
                         }
                     }
-                    INPUT_FILTER.TEXT_ONLY -> {
+                    InputFilter.TEXT_ONLY -> {
                         for (i in start until end) {
                             if (!textOnly.matches(source?.get(i).toString())) {
                                 return ""
                             }
                         }
                     }
-                    INPUT_FILTER.LOWERCASE_WITH_SPECIAL_CHAR -> {
+                    InputFilter.LOWERCASE_WITH_SPECIAL_CHAR -> {
                         for (i in start until end) {
                             if (!lowerCaseWithSpecialChar.matches(source?.get(i).toString())) {
                                 return ""
                             }
                         }
                     }
-                    INPUT_FILTER.UPPERCASE_WITH_SPECIAL_CHAR -> {
+                    InputFilter.UPPERCASE_WITH_SPECIAL_CHAR -> {
                         for (i in start until end) {
                             if (!upperCaseWithSpecialChar.matches(source?.get(i).toString())) {
                                 return ""
                             }
                         }
                     }
-                    INPUT_FILTER.PASSWORD -> {
+                    InputFilter.PASSWORD -> {
                         for (i in start until end) {
                             if (!password.matches(source?.get(i).toString())) {
                                 return ""
                             }
+                        }
+                    }
+                    InputFilter.PHONE -> {
+                        if (source.isNullOrEmpty()) {
+                            return null
+                        }
+                        if (dstart == 0 && source[0] == '0') {
+                            return ""
                         }
                     }
                 }
@@ -189,6 +221,7 @@ class CustomInputView: ConstraintLayout {
 
     fun setText(s: String) {
         binding.inputText.setText(s)
+        binding.outputText.text = s
     }
 
     interface InputViewListener {
@@ -197,5 +230,7 @@ class CustomInputView: ConstraintLayout {
         fun beforeTextChanged() {}
         fun onTextChanged() {}
         fun onInputClicked() {}
+
+        fun onHelperClicked() {}
     }
 }
