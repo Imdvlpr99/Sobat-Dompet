@@ -6,23 +6,19 @@
     <string name="onboarding_sub_title_1">Transaksi aman dan nyaman ke semua rekening bank dan e-wallet Anda dalam satu genggaman</string>
     <string name="onboarding_sub_title_2">Atur semua pengeluaran dan pemasukan dari semua akun rekening dan e-wallet Anda kini jadi lebih mudah</string>
     <string name="onboarding_sub_title_3">Nikmati kemudahan dalam mengatur seluruh akun rekening dan e-wallet dalam satu aplikasi</string>
-    <string name="login_text">Masuk</string>
-    <string name="login_title">Selamat Datang kembali</string>
-    <string name="login_desc">Masukkan nomor handphone yang sudah kamu daftarkan</string>
-    <string name="register_text">Daftar</string>
     <string name="getting_started">Mulai Sekarang</string>
     <string name="getting_started_title">Mulai kemudahan dalam bertransaksi sekarang juga</string>
     <string name="getting_started_sub_title">Nikmati kemudahan dalam mengatur seluruh akun rekening bank dan e-money Anda dan permudah transaksi dalam satu platform</string>
     <string name="title_example">Username :</string>
-    <string name="forgot_password">Lupa Password ?</string>
+    <string name="forgot_password">Lupa Password</string>
+    <string name="forgot_username">Lupa Nama Pengguna</string>
+    <string name="forgot_phone">Lupa Nomor HP</string>
     <string name="phone_title">Nomor Handphone :</string>
     <string name="phone_hint">Masukkan nomor handphone Anda</string>
     <string name="password_title">Kata Sandi :</string>
     <string name="password_confirm_title">Konfirmasi Kata Sandi :</string>
     <string name="password_hint">Masukkan kata sandi</string>
     <string name="password_confirm_hint">Masukkan konfirmasi kata sandi</string>
-    <string name="register_title">Daftar</string>
-    <string name="register_sub_title">Daftar pengguna baru dengan mengisi form berikut</string>
     <string name="password_error">Kata sandi harus terdiri dari minimal 5 karakter dan maksimal 15 karakter dengan kombinasi huruf dan angka</string>
     <string name="password_confirm_error">Kata sandi tidak cocok</string>
     <string name="phone_error">Nomor handphone harus terdiri dari minimal 12 angka dan maksimal 13 angka</string>
@@ -42,6 +38,9 @@
     <string name="otp_info">Tidak menerima Kode OTP? Kirim Ulang OTP</string>
     <string name="otp_resend">Kirim Ulang OTP</string>
     <string name="otp_countdown">Kirim ulang kode OTP dalam %1$s</string>
+    <string name="register_text">Daftar</string>
+    <string name="register_title">Daftar</string>
+    <string name="register_sub_title">Daftar pengguna baru dengan mengisi form berikut</string>
     <string name="register_full_name">Nama Lengkap :</string>
     <string name="register_user_name">Nama Pengguna :</string>
     <string name="register_email">Email :</string>
@@ -50,6 +49,7 @@
     <string name="register_user_name_hint">Masukkan nama pengguna Anda</string>
     <string name="register_email_hint">Masukkan email Anda</string>
     <string name="register_date_of_birth_hint">Masukkan tanggal lahir Anda</string>
+    <string name="register_email_invalid">Email tidak valid</string>
     <string name="personal_info_title">Tambahkan informasi pribadi Anda</string>
     <string name="personal_info_sub_title">Informasi ini dibutuhkan untuk melengkapi proses registrasi Anda</string>
     <string name="internal_server_error">Internal Server Error</string>
@@ -67,7 +67,7 @@
     <string name="response_register_available">Email atau nomor handphone tersedia, yuk lanjutin pendaftaran akun nya</string>
     <string name="response_register_phone_registered">Nomor handphone telah terdaftar</string>
     <string name="response_register_phone_available">Nomor handphone tersedia, silahkan lanjut ke proses selanjutnya</string>
-    <string name="repsponse_register_check_success">Pengecekan data sukses</string>
+    <string name="response_register_check_success">Pengecekan data sukses</string>
     <string name="response_register_email_registered">Email telah terdaftar</string>
     <string name="response_register_username_registered">Username telah terdaftar</string>
     <string name="response_register_success">Berhasil registrasi</string>
@@ -75,4 +75,13 @@
     <string name="response_login_already_login">Akun telah login di perangkat lain</string>
     <string name="response_login_not_registered">Akun tidak terdaftar</string>
     <string name="response_login_success">Login akun berhasil</string>
+    <string name="login_text">Masuk</string>
+    <string name="login_title">Selamat Datang kembali</string>
+    <string name="login_desc">Masukkan nomor handphone yang sudah kamu daftarkan</string>
+    <string name="login_username_title">Username</string>
+    <string name="login_username_desc">Masuk dengan nama pengguna</string>
+    <string name="login_phone_title">Nomor HP</string>
+    <string name="login_phone_desc">Masuk dengan nomor HP</string>
+    <string name="login_do_not_have_account">Belum punya akun? Daftar Sekarang</string>
+    <string name="login_create_account">Daftar Sekarang</string>
 </resources>
