@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Login(
+    var userName: String = "",
     var phone: String = "",
     var password: String = "",
     var installationID: String = "",
