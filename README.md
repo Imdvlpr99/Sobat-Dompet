@@ -1,4 +1,4 @@
-# ExpenseTracker
+# Sobat Dompet
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 
