@@ -1,12 +1,15 @@
 package com.imdvlpr.expensetracker.helper.utils
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.os.Parcelable
 import android.text.Spannable
@@ -14,9 +17,13 @@ import android.text.SpannableStringBuilder
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Base64
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.CalendarConstraints
@@ -28,6 +35,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import kotlin.math.roundToInt
 
 fun encodeImage(bitmap: Bitmap): String {
     val previewWidth = 300
@@ -42,6 +50,18 @@ fun encodeImage(bitmap: Bitmap): String {
 fun decodeImage(encodedImage: String): Bitmap {
     val bytes = Base64.decode(encodedImage, Base64.DEFAULT)
     return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+}
+
+fun Activity.setTheme() {
+    setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
+    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
+    window.statusBarColor = Color.TRANSPARENT
+}
+
+fun convertDpToPx(dp: Int): Int {
+    val metrics = Resources.getSystem().displayMetrics
+    return (dp * (metrics.xdpi / DisplayMetrics.DENSITY_DEFAULT)).roundToInt()
 }
 
 fun setWindowFlag(activity: Activity, bits: Int, on: Boolean) {
