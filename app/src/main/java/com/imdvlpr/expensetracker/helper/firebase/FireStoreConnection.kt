@@ -39,7 +39,7 @@ class FireStoreConnection(val context: Context) {
                                             if (userName.isSuccessful && userName.result != null && userName.result.documents.size > 0) {
                                                 callback(StatusResponse(false, context.getString(R.string.response_register_username_registered)))
                                             } else {
-                                                callback(StatusResponse(true, context.getString(R.string.repsponse_register_check_success)))
+                                                callback(StatusResponse(true, context.getString(R.string.response_register_check_success)))
                                             }
                                         }
                                 }

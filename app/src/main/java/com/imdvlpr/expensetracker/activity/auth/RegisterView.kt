@@ -52,6 +52,7 @@ class RegisterView : BaseActivity(), AuthInterface {
             setTitle(getString(R.string.phone_title))
             setHint(getString(R.string.phone_hint))
             setInputType(InputType.TYPE_CLASS_NUMBER)
+            setInputFilter(CustomInputView.InputFilter.PHONE)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     when (s.toString().length < 12 || s.toString().length > 13) {
@@ -70,9 +71,9 @@ class RegisterView : BaseActivity(), AuthInterface {
             setTitle(getString(R.string.password_title))
             setHint(getString(R.string.password_hint))
             setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
-            setInputFilter(CustomInputView.INPUT_FILTER.PASSWORD)
+            setInputFilter(CustomInputView.InputFilter.PASSWORD)
             setIsPassword(true)
-            setIndicator(right = true)
+            setIndicator(true)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     when (s.toString().length < 5 || s.toString().length > 10) {
@@ -91,9 +92,9 @@ class RegisterView : BaseActivity(), AuthInterface {
             setTitle(getString(R.string.password_confirm_title))
             setHint(getString(R.string.password_confirm_hint))
             setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
-            setInputFilter(CustomInputView.INPUT_FILTER.PASSWORD)
+            setInputFilter(CustomInputView.InputFilter.PASSWORD)
             setIsPassword(true)
-            setIndicator(right = true)
+            setIndicator(true)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     when (s.toString().length < 5 || s.toString().length > 15) {

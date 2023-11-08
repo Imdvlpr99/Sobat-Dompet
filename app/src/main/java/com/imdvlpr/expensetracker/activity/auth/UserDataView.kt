@@ -86,7 +86,7 @@ class UserDataView : BaseActivity(), AuthInterface {
             setTitle(getString(R.string.register_full_name))
             setHint(getString(R.string.register_full_name_hint))
             setInputType(InputType.TYPE_CLASS_TEXT)
-            setInputFilter(CustomInputView.INPUT_FILTER.TEXT_ONLY)
+            setInputFilter(CustomInputView.InputFilter.TEXT_ONLY)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     register.fullName = s.toString()
@@ -99,7 +99,7 @@ class UserDataView : BaseActivity(), AuthInterface {
             setTitle(getString(R.string.register_user_name))
             setHint(getString(R.string.register_user_name_hint))
             setInputType(InputType.TYPE_CLASS_TEXT)
-            setInputFilter(CustomInputView.INPUT_FILTER.LOWERCASE_WITH_SPECIAL_CHAR)
+            setInputFilter(CustomInputView.InputFilter.LOWERCASE_WITH_SPECIAL_CHAR)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     register.userName = s.toString()
@@ -114,8 +114,13 @@ class UserDataView : BaseActivity(), AuthInterface {
             setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
-                    register.email = s.toString()
-                    validateInput()
+                    if (binding.email.isEmailValid(s.toString())) {
+                        setError(false)
+                        register.email = s.toString()
+                        validateInput()
+                    } else {
+                        setError(true, getString(R.string.register_email_invalid))
+                    }
                 }
             })
         }
