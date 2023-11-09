@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.auth.RegisterView">
 
-    <com.imdvlpr.expensetracker.helper.ui.CustomToolbar
+    <com.imdvlpr.sobatdompet.helper.ui.CustomToolbar
         android:id="@+id/customToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <com.imdvlpr.expensetracker.helper.ui.CustomInputView
+        <com.imdvlpr.sobatdompet.helper.ui.CustomInputView
             android:id="@+id/phoneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.imdvlpr.expensetracker.helper.ui.CustomInputView
+        <com.imdvlpr.sobatdompet.helper.ui.CustomInputView
             android:id="@+id/passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/phoneEt" />
 
-        <com.imdvlpr.expensetracker.helper.ui.CustomInputView
+        <com.imdvlpr.sobatdompet.helper.ui.CustomInputView
             android:id="@+id/confirmPasswordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,28 +1,45 @@
 <resources>
-    <string name="app_name">ExpenseTracker</string>
+    <string name="app_name">Sobat Dompet</string>
+    <string name="title_example">Username :</string>
+    <string name="continue_text">Lanjutkan</string>
+
+    <!-- Onboarding -->
     <string name="onboarding_text_1">Transaksi aman dari semua rekening bank dan e-wallet dalam satu platform</string>
     <string name="onboarding_text_2">Lacak semua pemasukan dan pengeluaran dari semua rekening dalam satu aplikasi</string>
     <string name="onboarding_text_3">Atur semua akun rekening bank dan e-wallet Anda dalam satu aplikasi</string>
     <string name="onboarding_sub_title_1">Transaksi aman dan nyaman ke semua rekening bank dan e-wallet Anda dalam satu genggaman</string>
     <string name="onboarding_sub_title_2">Atur semua pengeluaran dan pemasukan dari semua akun rekening dan e-wallet Anda kini jadi lebih mudah</string>
     <string name="onboarding_sub_title_3">Nikmati kemudahan dalam mengatur seluruh akun rekening dan e-wallet dalam satu aplikasi</string>
+
+    <!-- Getting Started -->
     <string name="getting_started">Mulai Sekarang</string>
     <string name="getting_started_title">Mulai kemudahan dalam bertransaksi sekarang juga</string>
     <string name="getting_started_sub_title">Nikmati kemudahan dalam mengatur seluruh akun rekening bank dan e-money Anda dan permudah transaksi dalam satu platform</string>
-    <string name="title_example">Username :</string>
+
+    <!-- Forgot -->
     <string name="forgot_password">Lupa Password</string>
     <string name="forgot_username">Lupa Nama Pengguna</string>
     <string name="forgot_phone">Lupa Nomor HP</string>
+    <string name="forgot_recover_title">Perbaharui Akun</string>
+    <string name="forgot_recover_button">Perbaharui</string>
+    <string name="forgot_username_hint">Masukkan nama pengguna Anda</string>
+    <string name="forgot_email_hint">Masukkan Email Anda</string>
+    <string name="forgot_phone_hint">Masukkan nomor HP Anda</string>
+
+    <!-- Phone -->
     <string name="phone_title">Nomor Handphone :</string>
-    <string name="phone_hint">Masukkan nomor handphone Anda</string>
+    <string name="phone_hint">Cth. 81234567890</string>
+    <string name="phone_error">Nomor handphone harus terdiri dari minimal 12 angka dan maksimal 13 angka</string>
+
+    <!-- Password -->
     <string name="password_title">Kata Sandi :</string>
     <string name="password_confirm_title">Konfirmasi Kata Sandi :</string>
     <string name="password_hint">Masukkan kata sandi</string>
     <string name="password_confirm_hint">Masukkan konfirmasi kata sandi</string>
     <string name="password_error">Kata sandi harus terdiri dari minimal 5 karakter dan maksimal 15 karakter dengan kombinasi huruf dan angka</string>
     <string name="password_confirm_error">Kata sandi tidak cocok</string>
-    <string name="phone_error">Nomor handphone harus terdiri dari minimal 12 angka dan maksimal 13 angka</string>
-    <string name="continue_text">Lanjutkan</string>
+
+    <!-- Number -->
     <string name="number_1">1</string>
     <string name="number_2">2</string>
     <string name="number_3">3</string>
@@ -33,11 +50,15 @@
     <string name="number_8">8</string>
     <string name="number_9">9</string>
     <string name="number_0">0</string>
+
+    <!-- OTP -->
     <string name="otp_title">Verifikasi OTP</string>
     <string name="otp_desc">Kode OTP telah dikirimkan melalui WhatsApp ke nomor %1$s</string>
     <string name="otp_info">Tidak menerima Kode OTP? Kirim Ulang OTP</string>
     <string name="otp_resend">Kirim Ulang OTP</string>
     <string name="otp_countdown">Kirim ulang kode OTP dalam %1$s</string>
+
+    <!-- Register -->
     <string name="register_text">Daftar</string>
     <string name="register_title">Daftar</string>
     <string name="register_sub_title">Daftar pengguna baru dengan mengisi form berikut</string>
@@ -45,14 +66,18 @@
     <string name="register_user_name">Nama Pengguna :</string>
     <string name="register_email">Email :</string>
     <string name="register_date_of_birth">Tanggal Lahir :</string>
-    <string name="register_full_name_hint">Masukkan nama lengkap Anda</string>
-    <string name="register_user_name_hint">Masukkan nama pengguna Anda</string>
-    <string name="register_email_hint">Masukkan email Anda</string>
+    <string name="register_full_name_hint">Cth. Fanny Elisabeth</string>
+    <string name="register_user_name_hint">Cth. fanny123</string>
+    <string name="register_email_hint">Cth. email@mail.com</string>
     <string name="register_date_of_birth_hint">Masukkan tanggal lahir Anda</string>
     <string name="register_email_invalid">Email tidak valid</string>
+
+    <!-- Personal Infor -->
     <string name="personal_info_title">Tambahkan informasi pribadi Anda</string>
     <string name="personal_info_sub_title">Informasi ini dibutuhkan untuk melengkapi proses registrasi Anda</string>
-    <string name="internal_server_error">Internal Server Error</string>
+
+    <!-- Response -->
+    <string name="response_server_error">Internal Server Error</string>
     <string name="response_error_title">Permintaan gagal :(</string>
     <string name="response_error_desc">Permintaan kamu belum bisa diproses, coba lagi ya</string>
     <string name="response_success_title">Permintaan berhasil :)</string>
@@ -75,6 +100,8 @@
     <string name="response_login_already_login">Akun telah login di perangkat lain</string>
     <string name="response_login_not_registered">Akun tidak terdaftar</string>
     <string name="response_login_success">Login akun berhasil</string>
+
+    <!-- Login -->
     <string name="login_text">Masuk</string>
     <string name="login_title">Selamat Datang kembali</string>
     <string name="login_desc">Masukkan nomor handphone yang sudah kamu daftarkan</string>
