@@ -52,7 +52,8 @@ class RegisterView : BaseActivity(), AuthInterface {
             setTitle(getString(R.string.phone_title))
             setHint(getString(R.string.phone_hint))
             setInputType(InputType.TYPE_CLASS_NUMBER)
-            //setInputFilter(CustomInputView.InputFilter.PHONE)
+            setInputFilter(CustomInputView.InputFilter.PHONE)
+            setSuffix("+62")
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
                     when (s.toString().length < 12 || s.toString().length > 13) {

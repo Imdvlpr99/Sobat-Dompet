@@ -25,12 +25,12 @@ class Api(private val context: Context) {
                 try {
                     callback(OTP(JSON(response)))
                 } catch (e: JSONException) {
-                    callback(OTP(isSuccess = false, message = context.getString(R.string.internal_server_error)))
+                    callback(OTP(isSuccess = false, message = context.getString(R.string.response_server_error)))
                     Log.e("json-exception-otp", e.toString())
                 }
             },
             Response.ErrorListener { error: VolleyError ->
-                callback(OTP(isSuccess = false, message = context.getString(R.string.internal_server_error)))
+                callback(OTP(isSuccess = false, message = context.getString(R.string.response_server_error)))
                 Log.e("volley-exception-otp", error.toString())
             }) {
             override fun getParams(): Map<String, String> {

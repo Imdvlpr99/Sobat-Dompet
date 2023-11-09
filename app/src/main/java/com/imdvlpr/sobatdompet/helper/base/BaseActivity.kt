@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.imdvlpr.sobatdompet.R
 import com.imdvlpr.sobatdompet.helper.utils.setLocale
@@ -19,11 +20,16 @@ open class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initWindow()
+        initProgress()
+        onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    private fun initWindow() {
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
         window.statusBarColor = Color.TRANSPARENT
-        initProgress()
     }
 
     private fun initProgress() {
@@ -41,6 +47,12 @@ open class BaseActivity: AppCompatActivity() {
 
     fun showProgress() { if (!isFinishing && dialogProgress?.isShowing == false) dialogProgress?.show() }
     fun hideProgress() { if (!isFinishing && dialogProgress?.isShowing == true) dialogProgress?.dismiss() }
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            finish()
+        }
+    }
 
     override fun attachBaseContext(newBase: Context) {
         val newLocale = "id"

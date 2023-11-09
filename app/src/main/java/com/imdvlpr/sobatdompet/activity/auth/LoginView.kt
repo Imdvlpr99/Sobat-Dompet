@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.databinding.ActivityLoginBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomDualTab
@@ -88,7 +89,7 @@ class LoginView : BaseActivity() {
                 }
 
                 override fun onHelperClicked() {
-
+                    startActivity(ForgotView.intentForgot(this@LoginView, ForgotView.TYPE.USERNAME))
                 }
             })
         }
@@ -108,7 +109,7 @@ class LoginView : BaseActivity() {
                 }
 
                 override fun onHelperClicked() {
-
+                    startActivity(ForgotView.intentForgot(this@LoginView, ForgotView.TYPE.PASSWORD))
                 }
             })
         }
@@ -127,7 +128,7 @@ class LoginView : BaseActivity() {
                 }
 
                 override fun onHelperClicked() {
-
+                    startActivity(ForgotView.intentForgot(this@LoginView, ForgotView.TYPE.PHONE))
                 }
             })
         }

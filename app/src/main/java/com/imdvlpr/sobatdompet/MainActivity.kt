@@ -26,7 +26,7 @@ class MainActivity : BaseActivity() {
 
     private fun initView() {
         binding.customHeader.apply {
-            setPadding(0, this@MainActivity.getStatusBarHeight(), 0, 0)
+            setPadding(0, getStatusBarHeight(), 0, 0)
             setUserData("John Doe")
         }
     }
