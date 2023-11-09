@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.imdvlpr.expensetracker'
+    namespace 'com.imdvlpr.sobatdompet'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.imdvlpr.expensetracker"
+        applicationId "com.imdvlpr.sobatdompet"
         minSdk 26
         targetSdk 33
         versionCode 1

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.imdvlpr.expensetracker.helper.ui.CustomHomeHeader
+    <com.imdvlpr.sobatdompet.helper.ui.CustomHomeHeader
         android:id="@+id/customHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
