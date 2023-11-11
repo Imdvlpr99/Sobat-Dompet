@@ -2,6 +2,7 @@ package com.imdvlpr.sobatdompet.helper.base
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,20 +10,24 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResult
 import androidx.appcompat.app.AppCompatActivity
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.helper.utils.BetterActivityResult
 import com.imdvlpr.sobatdompet.helper.utils.setLocale
 import com.imdvlpr.sobatdompet.helper.utils.setWindowFlag
 
 open class BaseActivity: AppCompatActivity() {
 
     private var dialogProgress: Dialog? = null
+    lateinit var activityLauncher: BetterActivityResult<Intent, ActivityResult>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initWindow()
         initProgress()
         onBackPressedDispatcher.addCallback(this, callback)
+        activityLauncher = BetterActivityResult.registerActivityForResult(this)
     }
 
     private fun initWindow() {
