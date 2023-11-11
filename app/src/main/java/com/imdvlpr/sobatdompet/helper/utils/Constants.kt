@@ -4,6 +4,7 @@ object Constants {
 
     interface PREF {
         companion object {
+            const val DOC_ID = "doc_id"
             const val PREF_NAME = "ExpenseTracker"
             const val IS_NOT_FIRST_INSTALL = "is_not_first_install"
             const val IS_SIGNED_IN = "is_signed_in"

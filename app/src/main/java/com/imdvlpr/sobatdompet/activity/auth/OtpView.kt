@@ -16,6 +16,7 @@ import com.imdvlpr.sobatdompet.helper.utils.getParcelable
 import com.imdvlpr.sobatdompet.helper.utils.getSerializable
 import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
 import com.imdvlpr.sobatdompet.helper.utils.setSpannable
+import com.imdvlpr.sobatdompet.model.Forgot
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.Register
@@ -26,8 +27,9 @@ class OtpView : BaseActivity(), AuthInterface {
 
         private const val REGISTER_DATA = "register_data"
         private const val LOGIN_DATA = "login_data"
+        private const val FORGOT_DATA = "forgot_data"
         private const val OTP_TYPE = "type"
-        enum class TYPE { LOGIN, REGISTER }
+        enum class TYPE { LOGIN, REGISTER, FORGOT }
 
         fun intentRegister(context: Context, data: Register, type: TYPE): Intent {
             val intent = Intent(context, OtpView::class.java)
@@ -42,12 +44,20 @@ class OtpView : BaseActivity(), AuthInterface {
             intent.putExtra(OTP_TYPE, type)
             return intent
         }
+
+        fun intentForgot(context: Context, data: Forgot, type: TYPE): Intent {
+            val intent = Intent(context, OtpView::class.java)
+            intent.putExtra(FORGOT_DATA, data)
+            intent.putExtra(OTP_TYPE, type)
+            return intent
+        }
     }
 
     private lateinit var binding: ActivityOtpBinding
     private lateinit var presenter: AuthPresenter
     private var register = Register()
     private var login = Login()
+    private var forgot = Forgot()
     private var type: TYPE = TYPE.LOGIN
     private var expiredTime: Long = 0
     private var messageId: Int = 0
@@ -81,6 +91,10 @@ class OtpView : BaseActivity(), AuthInterface {
                 expiredTime = register.expiredIn.toLong()
                 messageId = register.messageId
                 phoneNumber = register.phone
+            }
+            TYPE.FORGOT -> {
+                phoneNumber = forgot.phone
+                presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = phoneNumber, isResend = false))
             }
         }
     }
@@ -135,7 +149,23 @@ class OtpView : BaseActivity(), AuthInterface {
 
     override fun onSuccessSendOtp(data: OTP) {
         if (!data.isResend) {
-            presenter.registerUser(register)
+            when (type) {
+                TYPE.REGISTER -> presenter.registerUser(register)
+                TYPE.FORGOT -> {
+                    if (data.messageId != 0 && data.expiredIn != 0) {
+                        expiredTime = data.expiredIn.toLong()
+                        messageId = data.messageId
+                        setOtpDesc()
+                    } else {
+                        setResult(RESULT_OK)
+                        finish()
+                    }
+                }
+                TYPE.LOGIN -> {
+                    setResult(RESULT_OK)
+                    finish()
+                }
+            }
         } else {
             responseDialog(true, getString(R.string.response_otp_resend_success), R.drawable.ic_success, getString(R.string.response_button_ok), object : ResponseDialogListener {
                 override fun onClick() {

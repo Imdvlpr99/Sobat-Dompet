@@ -56,11 +56,11 @@ class RegisterView : BaseActivity(), AuthInterface {
             setSuffix("+62")
             setListener(object : CustomInputView.InputViewListener {
                 override fun afterTextChanged(s: Editable?) {
-                    when (s.toString().length < 12 || s.toString().length > 13) {
+                    when (s.toString().length < 11 || s.toString().length > 12) {
                         true -> setError(true, getString(R.string.phone_error))
                         false -> {
                             setError(false)
-                            register.phone = s.toString()
+                            register.phone = getString(R.string.indonesia_number_suffix) + s.toString()
                             validateInput()
                         }
                     }

@@ -35,13 +35,13 @@ class CustomDualTab: ConstraintLayout {
     private fun init(context: Context) {
         binding = LayoutDualTabBinding.bind(LayoutInflater.from(context).inflate(R.layout.layout_dual_tab, this, true))
 
-        binding.userName.setOnClickListener {
+        binding.leftTab.setOnClickListener {
             if (!leftSelected) {
                 setSelected(SELECTED.LEFT)
                 listener?.onLeftClicked()
             }
         }
-        binding.phone.setOnClickListener {
+        binding.rightTab.setOnClickListener {
             if (!rightSelected) {
                 setSelected(SELECTED.RIGHT)
                 listener?.onRightClicked()
@@ -83,26 +83,31 @@ class CustomDualTab: ConstraintLayout {
         if (selected == SELECTED.LEFT) {
             leftSelected = true
             rightSelected = false
-            fadeInAnim(binding.userName)
-            fadeOutAnim(binding.phone)
-            binding.userName.setBackgroundResource(R.drawable.bg_white_corner)
-            binding.phone.setBackgroundResource(android.R.color.transparent)
-            binding.userNameTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
-            binding.phoneTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
+            fadeInAnim(binding.leftTab)
+            fadeOutAnim(binding.rightTab)
+            binding.leftTab.setBackgroundResource(R.drawable.bg_white_corner)
+            binding.rightTab.setBackgroundResource(android.R.color.transparent)
+            binding.leftTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
+            binding.rightTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
         } else if (selected == SELECTED.RIGHT) {
             leftSelected = false
             rightSelected = true
-            fadeInAnim(binding.phone)
-            fadeOutAnim(binding.userName)
-            binding.phone.setBackgroundResource(R.drawable.bg_white_corner)
-            binding.userName.setBackgroundResource(android.R.color.transparent)
-            binding.userNameTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
-            binding.phoneTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
+            fadeInAnim(binding.rightTab)
+            fadeOutAnim(binding.leftTab)
+            binding.rightTab.setBackgroundResource(R.drawable.bg_white_corner)
+            binding.leftTab.setBackgroundResource(android.R.color.transparent)
+            binding.leftTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
+            binding.rightTitle.setTextColor(ContextCompat.getColor(context, R.color.black))
         }
     }
 
     fun getSelected(): SELECTED {
         return getSelected
+    }
+
+    fun setTabTitle(left: String, right: String) {
+        binding.leftTitle.text = left
+        binding.rightTitle.text = right
     }
 
     fun setListener(listener: DualTabListener) {

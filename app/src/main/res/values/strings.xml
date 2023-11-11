@@ -2,6 +2,7 @@
     <string name="app_name">Sobat Dompet</string>
     <string name="title_example">Username :</string>
     <string name="continue_text">Lanjutkan</string>
+    <string name="indonesia_number_suffix">+62</string>
 
     <!-- Onboarding -->
     <string name="onboarding_text_1">Transaksi aman dari semua rekening bank dan e-wallet dalam satu platform</string>
@@ -100,15 +101,18 @@
     <string name="response_login_already_login">Akun telah login di perangkat lain</string>
     <string name="response_login_not_registered">Akun tidak terdaftar</string>
     <string name="response_login_success">Login akun berhasil</string>
+    <string name="response_login_incorrect_password">Password Salah</string>
 
     <!-- Login -->
     <string name="login_text">Masuk</string>
     <string name="login_title">Selamat Datang kembali</string>
     <string name="login_desc">Masukkan nomor handphone yang sudah kamu daftarkan</string>
     <string name="login_username_title">Username</string>
-    <string name="login_username_desc">Masuk dengan nama pengguna</string>
+    <string name="login_username_desc">Masuk dengan Username</string>
     <string name="login_phone_title">Nomor HP</string>
     <string name="login_phone_desc">Masuk dengan nomor HP</string>
     <string name="login_do_not_have_account">Belum punya akun? Daftar Sekarang</string>
     <string name="login_create_account">Daftar Sekarang</string>
+    <string name="login_need_help">Butuh Bantuan?</string>
+    <string name="login_contact_services">Pusat Bantuan</string>
 </resources>

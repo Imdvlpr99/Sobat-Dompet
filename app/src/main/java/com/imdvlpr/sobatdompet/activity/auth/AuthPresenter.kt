@@ -6,6 +6,7 @@ import android.os.Looper
 import com.imdvlpr.sobatdompet.helper.firebase.FireStoreConnection
 import com.imdvlpr.sobatdompet.helper.network.Api
 import com.imdvlpr.sobatdompet.helper.utils.DispatchGroup
+import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.Register
 import com.imdvlpr.weatherappp.helper.base.BasePresenter
@@ -13,9 +14,9 @@ import com.imdvlpr.weatherappp.helper.base.BasePresenter
 class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface> {
 
     var view: AuthInterface? = null
-    var api: Api? = null
-    var fireStoreConnection: FireStoreConnection? = null
-    var dispatchGroup: DispatchGroup? = null
+    private var api: Api? = null
+    private var fireStoreConnection: FireStoreConnection? = null
+    private var dispatchGroup: DispatchGroup? = null
 
     override fun onAttach(view: AuthInterface) {
         this.view = view
@@ -77,5 +78,19 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         }
     }
 
+    fun loginUsername(login: Login) {
+        view?.onProgress()
+        dispatchGroup?.enter()
 
+        fireStoreConnection?.loginUsername(login) { login, statusResponse ->
+            val mainHandler = Handler(Looper.getMainLooper())
+            mainHandler.postDelayed({
+                when (statusResponse.isSuccess) {
+                    true -> view?.onSuccessLogin(login)
+                    false -> view?.onFailed(statusResponse.message)
+                }
+                dispatchGroup?.leave()
+            }, 2000)
+        }
+    }
 }
