@@ -13,7 +13,7 @@
         app:layout_constraintGuide_percent="0.50" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/userName"
+        android:id="@+id/leftTab"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="6dp"
@@ -24,20 +24,20 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/userNameTitle"
+        android:id="@+id/leftTitle"
         style="@style/TextView.Semibold16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:text="@string/login_username_title"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/userName"
-        app:layout_constraintEnd_toEndOf="@+id/userName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/userName" />
+        app:layout_constraintBottom_toBottomOf="@+id/leftTab"
+        app:layout_constraintEnd_toEndOf="@+id/leftTab"
+        app:layout_constraintStart_toStartOf="@+id/leftTab"
+        app:layout_constraintTop_toTopOf="@+id/leftTab" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/phone"
+        android:id="@+id/rightTab"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="6dp"
@@ -47,16 +47,16 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/phoneTitle"
+        android:id="@+id/rightTitle"
         style="@style/TextView.Semibold16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:text="@string/login_phone_title"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/phone"
-        app:layout_constraintEnd_toEndOf="@+id/phone"
-        app:layout_constraintStart_toStartOf="@+id/phone"
-        app:layout_constraintTop_toTopOf="@+id/phone" />
+        app:layout_constraintBottom_toBottomOf="@+id/rightTab"
+        app:layout_constraintEnd_toEndOf="@+id/rightTab"
+        app:layout_constraintStart_toStartOf="@+id/rightTab"
+        app:layout_constraintTop_toTopOf="@+id/rightTab" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
