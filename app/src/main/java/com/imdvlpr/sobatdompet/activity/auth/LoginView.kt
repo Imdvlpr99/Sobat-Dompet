@@ -5,18 +5,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
+import android.util.Log
+import com.google.firebase.installations.FirebaseInstallations
 import com.imdvlpr.sobatdompet.R
 import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.databinding.ActivityLoginBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomDualTab
 import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
+import com.imdvlpr.sobatdompet.helper.ui.ResponseDialogListener
+import com.imdvlpr.sobatdompet.helper.ui.responseDialog
 import com.imdvlpr.sobatdompet.helper.utils.setSpannable
 import com.imdvlpr.sobatdompet.helper.utils.setTheme
 import com.imdvlpr.sobatdompet.helper.utils.setVisible
 import com.imdvlpr.sobatdompet.model.Login
+import kotlin.math.log
 
-class LoginView : BaseActivity() {
+class LoginView : BaseActivity(), AuthInterface {
 
     companion object {
         fun newIntent(context: Context): Intent {
@@ -32,6 +37,7 @@ class LoginView : BaseActivity() {
 
     enum class TYPE { USERNAME, PHONE }
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var presenter: AuthPresenter
     private var login = Login()
     private var loginType: TYPE = TYPE.USERNAME
 
@@ -40,6 +46,7 @@ class LoginView : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTheme()
+        onAttach()
         initTab()
         initView()
     }
@@ -133,9 +140,15 @@ class LoginView : BaseActivity() {
             })
         }
 
-        /*binding.loginBtn.setOnClickListener {
-            startActivity(OtpView.intentLogin(this, login, OtpView.Companion.TYPE.LOGIN))
-        }*/
+        FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                login.installationID = task.result ?: ""
+            }
+        }
+
+        binding.loginUsernameBtn.setOnClickListener {
+            presenter.loginUsername(login)
+        }
     }
 
     private fun validateInput() {
@@ -143,5 +156,35 @@ class LoginView : BaseActivity() {
             TYPE.USERNAME -> binding.loginUsernameBtn.isEnabled = login.userName.isNotEmpty() && login.password.isNotEmpty()
             TYPE.PHONE -> binding.loginPhoneBtn.isEnabled = login.phone.isNotEmpty()
         }
+    }
+
+    override fun onSuccessLogin(login: Login) {
+        Log.d("login-response", true.toString())
+    }
+
+    override fun onProgress() {
+        if (!isFinishing) showProgress()
+    }
+
+    override fun onFinishProgress() {
+        if (!isFinishing) hideProgress()
+    }
+
+    override fun onFailed(message: String) {
+        responseDialog(false, message, listener = object : ResponseDialogListener {
+            override fun onClick() {
+
+            }
+
+        })
+    }
+
+    override fun onAttach() {
+        presenter = AuthPresenter(this)
+        presenter.onAttach(this)
+    }
+
+    override fun onDetach() {
+        presenter.onDetach()
     }
 }

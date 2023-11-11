@@ -4,17 +4,21 @@ import android.content.Context
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.SharedPreference
+import com.imdvlpr.sobatdompet.helper.utils.decrypt
 import com.imdvlpr.sobatdompet.helper.utils.encrypt
+import com.imdvlpr.sobatdompet.model.Forgot
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.Register
 import com.imdvlpr.sobatdompet.model.StatusResponse
+import kotlin.math.log
 
 class FireStoreConnection(val context: Context) {
 
     private val database = FirebaseFirestore.getInstance()
-    private lateinit var sharedPreference: SharedPreference
+    private var sharedPreference: SharedPreference = SharedPreference()
 
     fun checkUsers(register: Register, callback: (StatusResponse) -> Unit) {
         database.collection(Constants.COLLECTION.USERS)
@@ -61,12 +65,13 @@ class FireStoreConnection(val context: Context) {
                 val data = hashMapOf(
                     Constants.PARAM.USER_ID to (it.documents.size + 1),
                     Constants.PARAM.PHONE to register.phone,
-                    Constants.PARAM.EMAIL to register.email,
+                    Constants.PARAM.EMAIL to context.encrypt(register.email),
                     Constants.PARAM.PASSWORD to context.encrypt(register.password),
                     Constants.PARAM.FULL_NAME to register.fullName,
                     Constants.PARAM.USER_NAME to register.userName,
                     Constants.PARAM.DATE_OF_BIRTH to register.dateOfBirth,
-                    Constants.PARAM.USER_IMAGE to register.userImage
+                    Constants.PARAM.USER_IMAGE to register.userImage,
+                    Constants.PARAM.DEVICE_ID to ""
                 )
 
                 database.collection(Constants.COLLECTION.USERS)
@@ -81,38 +86,69 @@ class FireStoreConnection(val context: Context) {
             }
     }
 
-    fun login(login: Login, callback: (StatusResponse) -> Unit) {
-        sharedPreference = SharedPreference()
+    fun loginUsername(login: Login, callback: (Login, StatusResponse) -> Unit) {
         sharedPreference.sharedPreference(context)
-
+        Log.d("encrypt-password", context.encrypt(login.password))
         database.collection(Constants.COLLECTION.USERS)
-            .whereEqualTo(Constants.PARAM.PHONE, login.phone)
-            .whereEqualTo(Constants.PARAM.PASSWORD, context.encrypt(login.password))
+            .whereEqualTo(Constants.PARAM.USER_NAME, login.userName)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful && task.result != null && task.result.documents.size > 0) {
                     val documentSnapshot = task.result.documents[0]
-                    val deviceId = documentSnapshot.getString(Constants.PARAM.DEVICE_ID)
-
-                    if (deviceId == login.installationID || deviceId?.isEmpty() == true) {
-                        sharedPreference.saveToPref(Constants.PREF.IS_NOT_FIRST_INSTALL, true)
-                        sharedPreference.saveToPref(Constants.PREF.IS_SIGNED_IN, true)
-                        sharedPreference.saveToPref(Constants.PREF.USER_ID, documentSnapshot.getLong(Constants.PREF.USER_ID)?.toInt())
-                        sharedPreference.saveToPref(Constants.PREF.FULL_NAME, documentSnapshot.getString(Constants.PREF.FULL_NAME).toString())
-                        sharedPreference.saveToPref(Constants.PREF.USER_NAME, documentSnapshot.getString(Constants.PREF.USER_NAME).toString())
-                        sharedPreference.saveToPref(Constants.PREF.EMAIL, documentSnapshot.getString(Constants.PREF.EMAIL).toString())
-                        sharedPreference.saveToPref(Constants.PREF.PHONE, documentSnapshot.getString(Constants.PARAM.PHONE).toString())
-                        sharedPreference.saveToPref(Constants.PREF.USER_IMAGE, documentSnapshot.getString(Constants.PARAM.USER_IMAGE).toString())
-                        sharedPreference.saveToPref(Constants.PREF.DATE_OF_BIRTH, documentSnapshot.getString(Constants.PARAM.DATE_OF_BIRTH).toString())
-                        callback(StatusResponse(true, context.getString(R.string.response_login_success)))
+                    val password = context.decrypt(documentSnapshot.getString(Constants.PARAM.PASSWORD).toString())
+                    val deviceId = if (documentSnapshot.getString(Constants.PARAM.DEVICE_ID).toString().isNotEmpty()) {
+                        context.decrypt(documentSnapshot.getString(Constants.PARAM.DEVICE_ID).toString())
                     } else {
-                        callback(StatusResponse(false, context.getString(R.string.response_login_already_login)))
+                        documentSnapshot.getString(Constants.PARAM.DEVICE_ID).toString()
                     }
+
+                    if (login.password == password) {
+                        if (deviceId == login.installationID || deviceId.isEmpty()) {
+                            val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
+                            val phoneNumber = context.decrypt(documentSnapshot.getString(Constants.PARAM.PHONE).toString())
+
+                            sharedPreference.saveToPref(Constants.PREF.IS_NOT_FIRST_INSTALL, true)
+                            sharedPreference.saveToPref(Constants.PREF.EMAIL, email)
+                            sharedPreference.saveToPref(Constants.PREF.PHONE, phoneNumber)
+                            sharedPreference.saveToPref(Constants.PREF.DOC_ID, documentSnapshot.id)
+                            sharedPreference.saveToPref(Constants.PREF.USER_ID, documentSnapshot.getLong(Constants.PREF.USER_ID)?.toInt())
+                            sharedPreference.saveToPref(Constants.PREF.FULL_NAME, documentSnapshot.getString(Constants.PREF.FULL_NAME).toString())
+                            sharedPreference.saveToPref(Constants.PREF.USER_NAME, documentSnapshot.getString(Constants.PREF.USER_NAME).toString())
+                            sharedPreference.saveToPref(Constants.PREF.USER_IMAGE, documentSnapshot.getString(Constants.PARAM.USER_IMAGE).toString())
+                            sharedPreference.saveToPref(Constants.PREF.DATE_OF_BIRTH, documentSnapshot.getString(Constants.PARAM.DATE_OF_BIRTH).toString())
+
+
+                            database.collection(Constants.COLLECTION.USERS).document(
+                                sharedPreference.getStringFromPref(Constants.PREF.DOC_ID))
+                                .update(Constants.PARAM.DEVICE_ID, context.encrypt(login.installationID))
+                                .addOnCompleteListener {
+                                    callback(Login(phone = phoneNumber, email = email), StatusResponse(true, context.getString(R.string.response_login_success)))
+                                }
+                        } else {
+                            callback(Login(), StatusResponse(false, context.getString(R.string.response_login_already_login)))
+                        }
+                    } else {
+                        callback(Login(), StatusResponse(false, context.getString(R.string.response_login_incorrect_password)))
+                    }
+                } else {
+                    callback(Login(), StatusResponse(false, context.getString(R.string.response_login_not_registered)))
                 }
             }
             .addOnFailureListener {
-                callback(StatusResponse(false, context.getString(R.string.response_login_not_registered)))
+                callback(Login(), StatusResponse(false, context.getString(R.string.response_server_error)))
                 Log.e("login-exception", it.message.toString())
+            }
+    }
+
+    fun forgot(forgot: Forgot, callback: (StatusResponse) -> Unit) {
+        database.collection(Constants.COLLECTION.USERS)
+            .whereEqualTo(Constants.PARAM.PHONE, context.encrypt(forgot.phone))
+            .whereEqualTo(Constants.PARAM.EMAIL, context.encrypt(forgot.email))
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful && task.result != null && task.result.documents.size > 0) {
+                    val documentSnapshot = task.result.documents[0]
+                }
             }
     }
 }

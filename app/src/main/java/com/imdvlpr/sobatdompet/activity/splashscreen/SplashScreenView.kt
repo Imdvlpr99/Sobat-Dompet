@@ -8,6 +8,7 @@ import android.util.Log
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
 import com.imdvlpr.sobatdompet.MainActivity
+import com.imdvlpr.sobatdompet.activity.auth.LoginView
 import com.imdvlpr.sobatdompet.activity.onBoarding.OnBoardingView
 import com.imdvlpr.sobatdompet.databinding.ActivitySplashScreenBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
@@ -37,17 +38,16 @@ class SplashScreenView : BaseActivity() {
             }
         }
 
-        FirebaseInstallations.getInstance().id.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("firebaseInstallationID", task.result ?: "")
-            }
-        }
-
         Handler(Looper.getMainLooper()).postDelayed({
             when (sessionManager.getBooleanFromPref(Constants.PREF.IS_NOT_FIRST_INSTALL)) {
                 true -> {
-                    startActivity(MainActivity.newIntent(this))
-                    finish()
+                    if (sessionManager.getBooleanFromPref(Constants.PREF.IS_SIGNED_IN)) {
+                        startActivity(MainActivity.newIntent(this))
+                        finish()
+                    } else {
+                        startActivity(LoginView.newIntent(this))
+                        finish()
+                    }
                 }
                 false -> {
                     startActivity(OnBoardingView.newIntent(this))
