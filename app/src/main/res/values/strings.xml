@@ -102,6 +102,9 @@
     <string name="response_login_not_registered">Akun tidak terdaftar</string>
     <string name="response_login_success">Login akun berhasil</string>
     <string name="response_login_incorrect_password">Password Salah</string>
+    <string name="response_logout_success">Logout success</string>
+    <string name="response_forgot_success">Akun kamu terdaftar, silahkan lanjutkan proses perubahan informasi akun</string>
+    <string name="response_forgot_email_invalid">Email kamu tidak valid</string>
 
     <!-- Login -->
     <string name="login_text">Masuk</string>
@@ -115,4 +118,7 @@
     <string name="login_create_account">Daftar Sekarang</string>
     <string name="login_need_help">Butuh Bantuan?</string>
     <string name="login_contact_services">Pusat Bantuan</string>
+
+    <!-- Logout -->
+    <string name="logout_title">Keluar</string>
 </resources>

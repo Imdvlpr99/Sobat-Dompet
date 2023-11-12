@@ -12,4 +12,6 @@ interface ForgotInterface: BaseView {
     fun onFailed(message: String)
 
     fun onSuccessForgot(statusResponse: StatusResponse)
+
+    fun onSuccessUpdateAccount()
 }

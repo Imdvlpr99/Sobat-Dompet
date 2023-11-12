@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.messaging.FirebaseMessaging
-import com.imdvlpr.sobatdompet.MainActivity
+import com.imdvlpr.sobatdompet.activity.main.MainActivity
 import com.imdvlpr.sobatdompet.activity.auth.LoginView
 import com.imdvlpr.sobatdompet.activity.onBoarding.OnBoardingView
 import com.imdvlpr.sobatdompet.databinding.ActivitySplashScreenBinding

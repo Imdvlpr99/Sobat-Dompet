@@ -82,11 +82,11 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        fireStoreConnection?.loginUsername(login) { login, statusResponse ->
+        fireStoreConnection?.loginUsername(login) { data, statusResponse ->
             val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when (statusResponse.isSuccess) {
-                    true -> view?.onSuccessLogin(login)
+                    true -> view?.onSuccessLogin(data)
                     false -> view?.onFailed(statusResponse.message)
                 }
                 dispatchGroup?.leave()
