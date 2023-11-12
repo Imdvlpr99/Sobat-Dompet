@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.imdvlpr.sobatdompet.R
-import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.SharedPreference
 import com.imdvlpr.sobatdompet.helper.utils.decrypt
@@ -13,7 +12,6 @@ import com.imdvlpr.sobatdompet.model.Forgot
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.Register
 import com.imdvlpr.sobatdompet.model.StatusResponse
-import kotlin.math.log
 
 class FireStoreConnection(val context: Context) {
 
@@ -88,7 +86,6 @@ class FireStoreConnection(val context: Context) {
 
     fun loginUsername(login: Login, callback: (Login, StatusResponse) -> Unit) {
         sharedPreference.sharedPreference(context)
-        Log.d("encrypt-password", context.encrypt(login.password))
         database.collection(Constants.COLLECTION.USERS)
             .whereEqualTo(Constants.PARAM.USER_NAME, login.userName)
             .get()
@@ -105,7 +102,7 @@ class FireStoreConnection(val context: Context) {
                     if (login.password == password) {
                         if (deviceId == login.installationID || deviceId.isEmpty()) {
                             val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
-                            val phoneNumber = context.decrypt(documentSnapshot.getString(Constants.PARAM.PHONE).toString())
+                            val phoneNumber = documentSnapshot.getString(Constants.PARAM.PHONE).toString()
 
                             sharedPreference.saveToPref(Constants.PREF.IS_NOT_FIRST_INSTALL, true)
                             sharedPreference.saveToPref(Constants.PREF.EMAIL, email)
@@ -140,15 +137,40 @@ class FireStoreConnection(val context: Context) {
             }
     }
 
-    fun forgot(forgot: Forgot, callback: (StatusResponse) -> Unit) {
+    fun forgot(forgot: Forgot, callback: (Forgot, StatusResponse) -> Unit) {
         database.collection(Constants.COLLECTION.USERS)
-            .whereEqualTo(Constants.PARAM.PHONE, context.encrypt(forgot.phone))
-            .whereEqualTo(Constants.PARAM.EMAIL, context.encrypt(forgot.email))
+            .whereEqualTo(Constants.PARAM.PHONE, forgot.phone)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful && task.result != null && task.result.documents.size > 0) {
                     val documentSnapshot = task.result.documents[0]
+                    val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
+                    if (forgot.email == email) {
+                        callback(Forgot(docId = documentSnapshot.id), StatusResponse(true, context.getString(R.string.response_forgot_success)))
+                    } else {
+                        callback(Forgot(), StatusResponse(false, context.getString(R.string.response_forgot_email_invalid)))
+                    }
+                } else {
+                    callback(Forgot(), StatusResponse(false, context.getString(R.string.response_login_not_registered)))
                 }
+            }
+    }
+
+    fun updateAccountCredential() {
+
+    }
+
+    fun logout(callback: (StatusResponse) -> Unit) {
+        sharedPreference.sharedPreference(context)
+        database.collection(Constants.COLLECTION.USERS).document(
+            sharedPreference.getStringFromPref(Constants.PREF.DOC_ID))
+            .update(Constants.PARAM.DEVICE_ID, "")
+            .addOnCompleteListener {
+                sharedPreference.clearPref()
+                callback(StatusResponse(true, context.getString(R.string.response_logout_success)))
+            }
+            .addOnFailureListener {
+                callback(StatusResponse(false, context.getString(R.string.response_server_error)))
             }
     }
 }

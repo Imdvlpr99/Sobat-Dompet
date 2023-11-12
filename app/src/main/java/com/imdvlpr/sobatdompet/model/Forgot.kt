@@ -9,5 +9,6 @@ data class Forgot(
     var userName: String = "",
     var phone: String = "",
     var email: String = "",
+    var docId: String = "",
     var forgotType: ForgotView.TYPE = ForgotView.TYPE.USERNAME
 ): Parcelable

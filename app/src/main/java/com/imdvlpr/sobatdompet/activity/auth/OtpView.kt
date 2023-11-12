@@ -12,6 +12,7 @@ import com.imdvlpr.sobatdompet.helper.ui.CustomToolbar
 import com.imdvlpr.sobatdompet.helper.ui.ResponseDialogListener
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
 import com.imdvlpr.sobatdompet.helper.utils.Constants
+import com.imdvlpr.sobatdompet.helper.utils.SharedPreference
 import com.imdvlpr.sobatdompet.helper.utils.getParcelable
 import com.imdvlpr.sobatdompet.helper.utils.getSerializable
 import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
@@ -55,6 +56,7 @@ class OtpView : BaseActivity(), AuthInterface {
 
     private lateinit var binding: ActivityOtpBinding
     private lateinit var presenter: AuthPresenter
+    private var sharedPreference: SharedPreference = SharedPreference()
     private var register = Register()
     private var login = Login()
     private var forgot = Forgot()
@@ -67,6 +69,7 @@ class OtpView : BaseActivity(), AuthInterface {
         super.onCreate(savedInstanceState)
         binding = ActivityOtpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedPreference.sharedPreference(this)
         onAttach()
         initBundle()
         initView()
@@ -79,6 +82,7 @@ class OtpView : BaseActivity(), AuthInterface {
         type = when (intent.getSerializable(OTP_TYPE, TYPE::class.java)) {
             TYPE.LOGIN -> TYPE.LOGIN
             TYPE.REGISTER -> TYPE.REGISTER
+            TYPE.FORGOT -> TYPE.FORGOT
             else -> TYPE.LOGIN
         }
         when (type) {
@@ -162,6 +166,7 @@ class OtpView : BaseActivity(), AuthInterface {
                     }
                 }
                 TYPE.LOGIN -> {
+                    sharedPreference.saveToPref(Constants.PREF.IS_SIGNED_IN, true)
                     setResult(RESULT_OK)
                     finish()
                 }
@@ -182,7 +187,7 @@ class OtpView : BaseActivity(), AuthInterface {
     override fun onSuccessRegister() {
         responseDialog(true, getString(R.string.response_otp_register_success_desc), R.drawable.ic_success, getString(R.string.response_button_next), object : ResponseDialogListener {
             override fun onClick() {
-                startActivity(LoginView.intentRegister(this@OtpView))
+                startActivity(LoginView.intentClear(this@OtpView))
                 finish()
             }
         })

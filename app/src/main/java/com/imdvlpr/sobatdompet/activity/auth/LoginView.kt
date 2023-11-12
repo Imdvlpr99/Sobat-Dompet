@@ -1,12 +1,13 @@
 package com.imdvlpr.sobatdompet.activity.auth
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
-import android.util.Log
 import com.google.firebase.installations.FirebaseInstallations
+import com.imdvlpr.sobatdompet.activity.main.MainActivity
 import com.imdvlpr.sobatdompet.R
 import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.databinding.ActivityLoginBinding
@@ -15,11 +16,12 @@ import com.imdvlpr.sobatdompet.helper.ui.CustomDualTab
 import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
 import com.imdvlpr.sobatdompet.helper.ui.ResponseDialogListener
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
+import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.setSpannable
 import com.imdvlpr.sobatdompet.helper.utils.setTheme
 import com.imdvlpr.sobatdompet.helper.utils.setVisible
 import com.imdvlpr.sobatdompet.model.Login
-import kotlin.math.log
+import com.imdvlpr.sobatdompet.model.OTP
 
 class LoginView : BaseActivity(), AuthInterface {
 
@@ -28,7 +30,7 @@ class LoginView : BaseActivity(), AuthInterface {
             return Intent(context, LoginView::class.java)
         }
 
-        fun intentRegister(context: Context): Intent {
+        fun intentClear(context: Context): Intent {
             val intent = Intent(context, LoginView::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             return intent
@@ -40,6 +42,7 @@ class LoginView : BaseActivity(), AuthInterface {
     private lateinit var presenter: AuthPresenter
     private var login = Login()
     private var loginType: TYPE = TYPE.USERNAME
+    private var phoneNumber: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,7 +162,23 @@ class LoginView : BaseActivity(), AuthInterface {
     }
 
     override fun onSuccessLogin(login: Login) {
-        Log.d("login-response", true.toString())
+        if (!isFinishing) {
+            phoneNumber = login.phone
+            presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = phoneNumber))
+        }
+    }
+
+    override fun onSuccessSendOtp(data: OTP) {
+        if (!isFinishing) {
+            login.messageId = data.messageId
+            login.expiredTime = data.expiredIn
+            login.phone = phoneNumber
+            activityLauncher.launch(OtpView.intentLogin(this, login, OtpView.Companion.TYPE.LOGIN)) {
+                when (it.resultCode) {
+                    Activity.RESULT_OK -> startActivity(MainActivity.newIntent(this))
+                }
+            }
+        }
     }
 
     override fun onProgress() {
