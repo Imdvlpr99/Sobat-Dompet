@@ -51,7 +51,7 @@ fun Activity.responseDialog(isSuccess:Boolean, responseDesc: String, responseIco
     dialog.show()
 }
 
-fun Activity.updateDialog(type: ForgotView.TYPE, listener: DialogClickListener? = null) {
+fun Activity.updateDialog(type: ForgotView.TYPE, listener: UpdateDialogListener? = null) {
     dialog = Dialog(this, R.style.DialogSlideAnimFullWidth)
     val binding = DialogUpdateCredentialBinding.bind(layoutInflater.inflate(R.layout.dialog_update_credential, null))
     val forgot = Forgot()
@@ -60,6 +60,7 @@ fun Activity.updateDialog(type: ForgotView.TYPE, listener: DialogClickListener? 
     dialog.setContentView(binding.root)
     dialog.setCancelable(false)
 
+    forgot.forgotType = type
     when (type) {
         ForgotView.TYPE.USERNAME -> {
             binding.updateUsername.setVisible(true)
@@ -97,7 +98,7 @@ fun Activity.updateDialog(type: ForgotView.TYPE, listener: DialogClickListener? 
         setIndicator(true)
         setListener(object : CustomInputView.InputViewListener {
             override fun afterTextChanged(s: Editable?) {
-                when (s.toString().length < 5 || s.toString().length > 10) {
+                when (s.toString().length < 5 || s.toString().length > 15) {
                     true -> setError(true, getString(R.string.password_error))
                     false -> {
                         setError(false)
@@ -130,7 +131,7 @@ fun Activity.updateDialog(type: ForgotView.TYPE, listener: DialogClickListener? 
     }
 
     binding.updateBtn.setOnClickListener {
-        listener?.onClick()
+        listener?.onClick(forgot)
         dialog.dismiss()
     }
 
@@ -149,8 +150,8 @@ private fun validateUpdateInput(button: MaterialButton, type: ForgotView.TYPE, f
     }
 }
 
-interface DialogClickListener {
-    fun onClick()
+interface UpdateDialogListener {
+    fun onClick(data: Forgot)
 }
 
 interface DatePickerDialog {

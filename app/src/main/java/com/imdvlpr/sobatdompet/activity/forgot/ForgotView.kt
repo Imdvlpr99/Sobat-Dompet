@@ -7,12 +7,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.activity.auth.LoginView
 import com.imdvlpr.sobatdompet.activity.auth.OtpView
 import com.imdvlpr.sobatdompet.databinding.ActivityForgotBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
 import com.imdvlpr.sobatdompet.helper.ui.CustomToolbar
-import com.imdvlpr.sobatdompet.helper.ui.DialogClickListener
+import com.imdvlpr.sobatdompet.helper.ui.UpdateDialogListener
+import com.imdvlpr.sobatdompet.helper.ui.ResponseDialogListener
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
 import com.imdvlpr.sobatdompet.helper.ui.updateDialog
 import com.imdvlpr.sobatdompet.helper.utils.Constants
@@ -150,27 +152,35 @@ class ForgotView : BaseActivity(), ForgotInterface {
     }
 
     override fun onSuccessForgot(forgot: Forgot) {
+        this.forgot.docId = forgot.docId
         if (!isFinishing) presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = forgot.phone))
     }
 
     override fun onSuccessSendOtp(data: OTP) {
-        forgot.messageId = data.messageId
-        forgot.expiredTime = data.expiredIn
-        if (!isFinishing) activityLauncher.launch(OtpView.intentForgot(this, forgot, OtpView.Companion.TYPE.FORGOT)) {
-            when (it.resultCode) {
-                Activity.RESULT_OK -> {
-                    updateDialog(forgotType, object : DialogClickListener {
-                        override fun onClick() {
-
-                        }
-
-                    })
+        if (!isFinishing) {
+            forgot.messageId = data.messageId
+            forgot.expiredTime = data.expiredIn
+            activityLauncher.launch(OtpView.intentForgot(this, forgot, OtpView.Companion.TYPE.FORGOT)) {
+                when (it.resultCode) {
+                    Activity.RESULT_OK -> {
+                        updateDialog(forgotType, object : UpdateDialogListener {
+                            override fun onClick(data: Forgot) {
+                                data.docId = forgot.docId
+                                presenter.updateCredential(data)
+                            }
+                        })
+                    }
                 }
             }
         }
     }
 
-    override fun onSuccessUpdateAccount() {
+    override fun onSuccessUpdateAccount(message: String) {
+        if (!isFinishing) responseDialog(true, message, R.drawable.ic_success, listener = object : ResponseDialogListener {
+            override fun onClick() {
+                startActivity(LoginView.intentClear(this@ForgotView))
+            }
+        })
     }
 
     override fun onAttach() {

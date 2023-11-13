@@ -60,4 +60,20 @@ class ForgotPresenter(private val context: Context) : BasePresenter<ForgotInterf
             }, 2000)
         }
     }
+
+    fun updateCredential(forgot: Forgot) {
+        view?.onProgress()
+        dispatchGroup?.enter()
+
+        fireStoreConnection?.updateAccountCredential(forgot) { response ->
+            val mainHandler = Handler(Looper.getMainLooper())
+            mainHandler.postDelayed({
+                when (response.isSuccess) {
+                    true -> view?.onSuccessUpdateAccount(response.message)
+                    false -> view?.onFailed(response.message)
+                }
+                dispatchGroup?.leave()
+            }, 2000)
+        }
+    }
 }

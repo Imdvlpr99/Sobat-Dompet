@@ -30,6 +30,9 @@
     <string name="forgot_update_username">Perbaharui Nama Pengguna</string>
     <string name="forgot_update_password">Perbaharui Kata Sandi</string>
     <string name="forgot_update_phone">Perbaharui Nomor HP</string>
+    <string name="forgot_update_username_success">Berhasil update username</string>
+    <string name="forgot_update_password_success">Berhasil update password</string>
+    <string name="forgot_update_phone_success">Berhasil update nomor HP</string>
 
     <!-- Phone -->
     <string name="phone_title">Nomor Handphone :</string>
