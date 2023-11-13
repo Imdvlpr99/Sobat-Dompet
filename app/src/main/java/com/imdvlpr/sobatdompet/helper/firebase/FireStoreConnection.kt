@@ -146,7 +146,7 @@ class FireStoreConnection(val context: Context) {
                     val documentSnapshot = task.result.documents[0]
                     val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
                     if (forgot.email == email) {
-                        callback(Forgot(docId = documentSnapshot.id), StatusResponse(true, context.getString(R.string.response_forgot_success)))
+                        callback(Forgot(docId = documentSnapshot.id, phone = forgot.phone), StatusResponse(true, context.getString(R.string.response_forgot_success)))
                     } else {
                         callback(Forgot(), StatusResponse(false, context.getString(R.string.response_forgot_email_invalid)))
                     }

@@ -23,9 +23,13 @@
     <string name="forgot_phone">Lupa Nomor HP</string>
     <string name="forgot_recover_title">Perbaharui Akun</string>
     <string name="forgot_recover_button">Perbaharui</string>
+    <string name="forgot_cancel_button">Batal</string>
     <string name="forgot_username_hint">Masukkan nama pengguna Anda</string>
     <string name="forgot_email_hint">Masukkan Email Anda</string>
     <string name="forgot_phone_hint">Masukkan nomor HP Anda</string>
+    <string name="forgot_update_username">Perbaharui Nama Pengguna</string>
+    <string name="forgot_update_password">Perbaharui Kata Sandi</string>
+    <string name="forgot_update_phone">Perbaharui Nomor HP</string>
 
     <!-- Phone -->
     <string name="phone_title">Nomor Handphone :</string>

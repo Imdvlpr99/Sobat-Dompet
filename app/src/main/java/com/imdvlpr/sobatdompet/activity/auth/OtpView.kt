@@ -79,6 +79,7 @@ class OtpView : BaseActivity(), AuthInterface {
     private fun initBundle() {
         register =  intent.getParcelable(REGISTER_DATA, Register::class.java) ?: Register()
         login = intent.getParcelable(LOGIN_DATA, Login::class.java) ?: Login()
+        forgot = intent.getParcelable(FORGOT_DATA, Forgot::class.java) ?: Forgot()
         type = when (intent.getSerializable(OTP_TYPE, TYPE::class.java)) {
             TYPE.LOGIN -> TYPE.LOGIN
             TYPE.REGISTER -> TYPE.REGISTER
@@ -97,8 +98,9 @@ class OtpView : BaseActivity(), AuthInterface {
                 phoneNumber = register.phone
             }
             TYPE.FORGOT -> {
+                expiredTime = forgot.expiredTime.toLong()
+                messageId = forgot.messageId
                 phoneNumber = forgot.phone
-                presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = phoneNumber, isResend = false))
             }
         }
     }
@@ -156,14 +158,8 @@ class OtpView : BaseActivity(), AuthInterface {
             when (type) {
                 TYPE.REGISTER -> presenter.registerUser(register)
                 TYPE.FORGOT -> {
-                    if (data.messageId != 0 && data.expiredIn != 0) {
-                        expiredTime = data.expiredIn.toLong()
-                        messageId = data.messageId
-                        setOtpDesc()
-                    } else {
-                        setResult(RESULT_OK)
-                        finish()
-                    }
+                    setResult(RESULT_OK)
+                    finish()
                 }
                 TYPE.LOGIN -> {
                     sharedPreference.saveToPref(Constants.PREF.IS_SIGNED_IN, true)
