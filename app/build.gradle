@@ -18,7 +18,7 @@ android {
 
         resValue "string", "public_key", PUBLIC_KEY
         resValue "string", "private_key", PRIVATE_KEY
-        buildConfigField "String", "BASE_URL_OTP", BASE_URL_OTP
+        buildConfigField "String", "BASE_URL", BASE_URL
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

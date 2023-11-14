@@ -18,7 +18,6 @@ import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
 import com.imdvlpr.sobatdompet.helper.ui.CustomInsertImage
 import com.imdvlpr.sobatdompet.helper.ui.CustomToolbar
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
-import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.DatePickerListener
 import com.imdvlpr.sobatdompet.helper.utils.encodeImage
 import com.imdvlpr.sobatdompet.helper.utils.getParcelable
@@ -171,7 +170,7 @@ class UserDataView : BaseActivity(), AuthInterface {
     }
 
     override fun onSuccessCheckUsers(response: StatusResponse) {
-        if (!isFinishing) presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = register.phone))
+        if (!isFinishing) presenter.sendOtp(OTP(phoneNumber = register.phone))
     }
 
     override fun onSuccessSendOtp(data: OTP) {

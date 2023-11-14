@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OTP(
-    var action: String = "",
+    var email: String = "",
     var messageId: Int = 0,
     var expiredIn: Int = 0,
     var otpNumber: Int = 0,

@@ -13,11 +13,10 @@ import com.imdvlpr.sobatdompet.databinding.ActivityForgotBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
 import com.imdvlpr.sobatdompet.helper.ui.CustomToolbar
-import com.imdvlpr.sobatdompet.helper.ui.UpdateDialogListener
 import com.imdvlpr.sobatdompet.helper.ui.ResponseDialogListener
+import com.imdvlpr.sobatdompet.helper.ui.UpdateDialogListener
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
 import com.imdvlpr.sobatdompet.helper.ui.updateDialog
-import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.getSerializable
 import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
 import com.imdvlpr.sobatdompet.helper.utils.setVisible
@@ -153,7 +152,7 @@ class ForgotView : BaseActivity(), ForgotInterface {
 
     override fun onSuccessForgot(forgot: Forgot) {
         this.forgot.docId = forgot.docId
-        if (!isFinishing) presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = forgot.phone))
+        if (!isFinishing) presenter.sendOtp(OTP(phoneNumber = forgot.phone))
     }
 
     override fun onSuccessSendOtp(data: OTP) {

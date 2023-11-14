@@ -99,7 +99,6 @@ class FireStoreConnection(val context: Context) {
                     } else {
                         documentSnapshot.getString(Constants.PARAM.DEVICE_ID).toString()
                     }
-                    Log.d("password-decrypted", password)
 
                     if (login.password == password) {
                         if (deviceId == login.installationID || deviceId.isEmpty()) {

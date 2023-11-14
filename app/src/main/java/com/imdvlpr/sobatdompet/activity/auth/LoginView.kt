@@ -7,16 +7,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import com.google.firebase.installations.FirebaseInstallations
-import com.imdvlpr.sobatdompet.activity.main.MainActivity
 import com.imdvlpr.sobatdompet.R
 import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
+import com.imdvlpr.sobatdompet.activity.main.MainActivity
 import com.imdvlpr.sobatdompet.databinding.ActivityLoginBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomDualTab
 import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
 import com.imdvlpr.sobatdompet.helper.ui.ResponseDialogListener
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
-import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.setSpannable
 import com.imdvlpr.sobatdompet.helper.utils.setTheme
 import com.imdvlpr.sobatdompet.helper.utils.setVisible
@@ -164,7 +163,7 @@ class LoginView : BaseActivity(), AuthInterface {
     override fun onSuccessLogin(login: Login) {
         if (!isFinishing) {
             phoneNumber = login.phone
-            presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = phoneNumber))
+            presenter.sendOtp(OTP(phoneNumber = phoneNumber))
         }
     }
 
