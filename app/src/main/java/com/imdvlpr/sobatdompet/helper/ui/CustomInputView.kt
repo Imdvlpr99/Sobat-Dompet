@@ -154,7 +154,7 @@ class CustomInputView: ConstraintLayout {
                 val lowerCaseWithSpecialChar = "[a-z\\p{P}]+".toRegex()
                 val upperCase = "[A-Z\\s]+".toRegex()
                 val upperCaseWithSpecialChar = "[A-Z\\p{P}]+".toRegex()
-                val password = "[A-Za-z\\p{P}]+".toRegex()
+                val password = "[A-Za-z\\p{P}0-9]+".toRegex()
 
                 when (inputFilter) {
                     InputFilter.LOWERCASE -> {

@@ -79,6 +79,7 @@ class OtpView : BaseActivity(), AuthInterface {
     private fun initBundle() {
         register =  intent.getParcelable(REGISTER_DATA, Register::class.java) ?: Register()
         login = intent.getParcelable(LOGIN_DATA, Login::class.java) ?: Login()
+        forgot = intent.getParcelable(FORGOT_DATA, Forgot::class.java) ?: Forgot()
         type = when (intent.getSerializable(OTP_TYPE, TYPE::class.java)) {
             TYPE.LOGIN -> TYPE.LOGIN
             TYPE.REGISTER -> TYPE.REGISTER
@@ -97,8 +98,9 @@ class OtpView : BaseActivity(), AuthInterface {
                 phoneNumber = register.phone
             }
             TYPE.FORGOT -> {
+                expiredTime = forgot.expiredTime.toLong()
+                messageId = forgot.messageId
                 phoneNumber = forgot.phone
-                presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = phoneNumber, isResend = false))
             }
         }
     }
@@ -136,7 +138,7 @@ class OtpView : BaseActivity(), AuthInterface {
         }
 
         binding.confirmBtn.setOnClickListener {
-            presenter.sendOtp(OTP(action = Constants.PARAM.VERIFY_OTP, messageId = messageId, otpNumber = binding.inputOTP.getValue().toInt()))
+            presenter.verifyOtp(OTP(messageId = messageId, otpNumber = binding.inputOTP.getValue().toInt()))
         }
     }
 
@@ -145,33 +147,14 @@ class OtpView : BaseActivity(), AuthInterface {
             setCountDown(getString(R.string.otp_countdown), true, expiredTime)
             setListener(object : CustomOTPInput.InputOTPListener {
                 override fun resendOtp() {
-                    presenter.sendOtp(OTP(action = Constants.PARAM.SEND_OTP, phoneNumber = phoneNumber, isResend = true))
+                    presenter.sendOtp(OTP(phoneNumber = phoneNumber, isResend = true))
                 }
             })
         }
     }
 
     override fun onSuccessSendOtp(data: OTP) {
-        if (!data.isResend) {
-            when (type) {
-                TYPE.REGISTER -> presenter.registerUser(register)
-                TYPE.FORGOT -> {
-                    if (data.messageId != 0 && data.expiredIn != 0) {
-                        expiredTime = data.expiredIn.toLong()
-                        messageId = data.messageId
-                        setOtpDesc()
-                    } else {
-                        setResult(RESULT_OK)
-                        finish()
-                    }
-                }
-                TYPE.LOGIN -> {
-                    sharedPreference.saveToPref(Constants.PREF.IS_SIGNED_IN, true)
-                    setResult(RESULT_OK)
-                    finish()
-                }
-            }
-        } else {
+        if (!isFinishing) if (data.isResend) {
             responseDialog(true, getString(R.string.response_otp_resend_success), R.drawable.ic_success, getString(R.string.response_button_ok), object : ResponseDialogListener {
                 override fun onClick() {
                     messageId = data.messageId
@@ -184,8 +167,23 @@ class OtpView : BaseActivity(), AuthInterface {
         }
     }
 
+    override fun onSuccessVerifyOtp(data: OTP) {
+        if (!isFinishing) when (type) {
+            TYPE.REGISTER -> presenter.registerUser(register)
+            TYPE.FORGOT -> {
+                setResult(RESULT_OK)
+                finish()
+            }
+            TYPE.LOGIN -> {
+                sharedPreference.saveToPref(Constants.PREF.IS_SIGNED_IN, true)
+                setResult(RESULT_OK)
+                finish()
+            }
+        }
+    }
+
     override fun onSuccessRegister() {
-        responseDialog(true, getString(R.string.response_otp_register_success_desc), R.drawable.ic_success, getString(R.string.response_button_next), object : ResponseDialogListener {
+        if (!isFinishing) responseDialog(true, getString(R.string.response_otp_register_success_desc), R.drawable.ic_success, getString(R.string.response_button_next), object : ResponseDialogListener {
             override fun onClick() {
                 startActivity(LoginView.intentClear(this@OtpView))
                 finish()

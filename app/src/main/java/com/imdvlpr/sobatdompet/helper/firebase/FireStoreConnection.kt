@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.helper.utils.Constants
 import com.imdvlpr.sobatdompet.helper.utils.SharedPreference
 import com.imdvlpr.sobatdompet.helper.utils.decrypt
@@ -146,7 +147,7 @@ class FireStoreConnection(val context: Context) {
                     val documentSnapshot = task.result.documents[0]
                     val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
                     if (forgot.email == email) {
-                        callback(Forgot(docId = documentSnapshot.id), StatusResponse(true, context.getString(R.string.response_forgot_success)))
+                        callback(Forgot(docId = documentSnapshot.id, phone = forgot.phone), StatusResponse(true, context.getString(R.string.response_forgot_success)))
                     } else {
                         callback(Forgot(), StatusResponse(false, context.getString(R.string.response_forgot_email_invalid)))
                     }
@@ -156,8 +157,42 @@ class FireStoreConnection(val context: Context) {
             }
     }
 
-    fun updateAccountCredential() {
-
+    fun updateAccountCredential(forgot: Forgot, callback: (StatusResponse) -> Unit) {
+        when (forgot.forgotType) {
+            ForgotView.TYPE.USERNAME -> {
+                database.collection(Constants.COLLECTION.USERS)
+                    .document(forgot.docId)
+                    .update(Constants.PARAM.USER_NAME, forgot.userName)
+                    .addOnCompleteListener {
+                        callback(StatusResponse(true, context.getString(R.string.forgot_update_username_success)))
+                    }
+                    .addOnFailureListener {
+                        Log.e("update-credential-exception", it.message.toString())
+                    }
+            }
+            ForgotView.TYPE.PASSWORD -> {
+                database.collection(Constants.COLLECTION.USERS)
+                    .document(forgot.docId)
+                    .update(Constants.PARAM.PASSWORD, context.encrypt(forgot.password))
+                    .addOnCompleteListener {
+                        callback(StatusResponse(true, context.getString(R.string.forgot_update_password_success)))
+                    }
+                    .addOnFailureListener {
+                        Log.e("update-credential-exception", it.message.toString())
+                    }
+            }
+            ForgotView.TYPE.PHONE -> {
+                database.collection(Constants.COLLECTION.USERS)
+                    .document(forgot.docId)
+                    .update(Constants.PARAM.PHONE, forgot.phone)
+                    .addOnCompleteListener {
+                        callback(StatusResponse(true, context.getString(R.string.forgot_update_phone_success)))
+                    }
+                    .addOnFailureListener {
+                        Log.e("update-credential-exception", it.message.toString())
+                    }
+            }
+        }
     }
 
     fun logout(callback: (StatusResponse) -> Unit) {

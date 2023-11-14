@@ -46,7 +46,9 @@ object Constants {
 
     interface ENDPOINT {
         companion object {
-            const val OTP = "otp"
+            const val SEND_OTP = "api/otp/send-otp"
+            const val SEND_OTP_EMAIL = "api/otp/send-otp-email"
+            const val VERIFY_OTP = "api/otp/verify-otp"
         }
     }
 }

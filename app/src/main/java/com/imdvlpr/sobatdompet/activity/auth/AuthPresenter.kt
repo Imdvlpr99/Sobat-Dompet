@@ -46,6 +46,22 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         }
     }
 
+    fun verifyOtp(data: OTP) {
+        view?.onProgress()
+        dispatchGroup?.enter()
+
+        api?.verifyEmail(data) { response ->
+            val mainHandler = Handler(Looper.getMainLooper())
+            mainHandler.postDelayed({
+                when (response.isSuccess) {
+                    true -> view?.onSuccessVerifyOtp(response)
+                    false -> view?.onFailed(response.message)
+                }
+                dispatchGroup?.leave()
+            }, 2000)
+        }
+    }
+
     fun checkUsers(register: Register) {
         view?.onProgress()
         dispatchGroup?.enter()

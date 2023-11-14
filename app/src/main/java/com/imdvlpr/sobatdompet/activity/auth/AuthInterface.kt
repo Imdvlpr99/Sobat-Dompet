@@ -1,6 +1,5 @@
 package com.imdvlpr.sobatdompet.activity.auth
 
-import com.google.firebase.firestore.auth.User
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.StatusResponse
@@ -15,6 +14,10 @@ interface AuthInterface: BaseView {
     fun onFailed(message: String)
 
     fun onSuccessSendOtp(data: OTP) {}
+
+    fun onSuccessVerifyOtp(data: OTP) {}
+
+    fun onSuccessSendEmailOtp(data: OTP) {}
 
     fun onSuccessLogin(login: Login) {}
 

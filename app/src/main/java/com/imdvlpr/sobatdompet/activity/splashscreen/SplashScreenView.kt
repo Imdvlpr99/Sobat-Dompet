@@ -41,14 +41,17 @@ class SplashScreenView : BaseActivity() {
             when (sessionManager.getBooleanFromPref(Constants.PREF.IS_NOT_FIRST_INSTALL)) {
                 true -> {
                     if (sessionManager.getBooleanFromPref(Constants.PREF.IS_SIGNED_IN)) {
+                        sessionManager.saveToPref(Constants.PREF.IS_NOT_FIRST_INSTALL, true)
                         startActivity(MainActivity.newIntent(this))
                         finish()
                     } else {
+                        sessionManager.saveToPref(Constants.PREF.IS_NOT_FIRST_INSTALL, true)
                         startActivity(LoginView.newIntent(this))
                         finish()
                     }
                 }
                 false -> {
+                    sessionManager.saveToPref(Constants.PREF.IS_NOT_FIRST_INSTALL, true)
                     startActivity(OnBoardingView.newIntent(this))
                     finish()
                 }
