@@ -16,6 +16,7 @@ class ForgotPresenter(private val context: Context) : BasePresenter<ForgotInterf
     private var api: Api? = null
     private var fireStoreConnection: FireStoreConnection? = null
     private var dispatchGroup: DispatchGroup? = null
+    private var mainHandler = Handler(Looper.getMainLooper())
 
     override fun onAttach(view: ForgotInterface) {
         this.view = view
@@ -34,9 +35,23 @@ class ForgotPresenter(private val context: Context) : BasePresenter<ForgotInterf
         dispatchGroup?.enter()
 
         api?.sendOtp(data) { response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when(response.isSuccess) {
+                    true -> view?.onSuccessSendOtp(response)
+                    else -> view?.onFailed(response.message)
+                }
+                dispatchGroup?.leave()
+            }, 2000)
+        }
+    }
+
+    fun sendOtpEmail(data: OTP) {
+        view?.onProgress()
+        dispatchGroup?.enter()
+
+        api?.sendOtpEmail(data) { response ->
+            mainHandler.postDelayed({
+                when (response.isSuccess) {
                     true -> view?.onSuccessSendOtp(response)
                     else -> view?.onFailed(response.message)
                 }
@@ -50,7 +65,6 @@ class ForgotPresenter(private val context: Context) : BasePresenter<ForgotInterf
         dispatchGroup?.enter()
 
         fireStoreConnection?.forgot(forgot) { data, response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when (response.isSuccess) {
                     true -> view?.onSuccessForgot(data)
@@ -66,7 +80,6 @@ class ForgotPresenter(private val context: Context) : BasePresenter<ForgotInterf
         dispatchGroup?.enter()
 
         fireStoreConnection?.updateAccountCredential(forgot) { response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when (response.isSuccess) {
                     true -> view?.onSuccessUpdateAccount(response.message)

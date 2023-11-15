@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.activity.forgot.ForgotView
 import com.imdvlpr.sobatdompet.databinding.ActivityOtpBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomNumberPad
@@ -30,6 +31,7 @@ class OtpView : BaseActivity(), AuthInterface {
         private const val LOGIN_DATA = "login_data"
         private const val FORGOT_DATA = "forgot_data"
         private const val OTP_TYPE = "type"
+        private const val FORGOT_TYPE = "forgot_type"
         enum class TYPE { LOGIN, REGISTER, FORGOT }
 
         fun intentRegister(context: Context, data: Register, type: TYPE): Intent {
@@ -46,10 +48,11 @@ class OtpView : BaseActivity(), AuthInterface {
             return intent
         }
 
-        fun intentForgot(context: Context, data: Forgot, type: TYPE): Intent {
+        fun intentForgot(context: Context, data: Forgot, type: TYPE, otpType: ForgotView.TYPE): Intent {
             val intent = Intent(context, OtpView::class.java)
             intent.putExtra(FORGOT_DATA, data)
             intent.putExtra(OTP_TYPE, type)
+            intent.putExtra(FORGOT_TYPE, otpType)
             return intent
         }
     }
@@ -61,8 +64,10 @@ class OtpView : BaseActivity(), AuthInterface {
     private var login = Login()
     private var forgot = Forgot()
     private var type: TYPE = TYPE.LOGIN
+    private var forgotType: ForgotView.TYPE = ForgotView.TYPE.PHONE
     private var expiredTime: Long = 0
     private var messageId: Int = 0
+    private var email: String = ""
     private var phoneNumber: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,12 +106,27 @@ class OtpView : BaseActivity(), AuthInterface {
                 expiredTime = forgot.expiredTime.toLong()
                 messageId = forgot.messageId
                 phoneNumber = forgot.phone
+                email = forgot.email
+                forgotType = when (intent.getSerializable(FORGOT_TYPE, ForgotView.TYPE::class.java)) {
+                    ForgotView.TYPE.USERNAME -> ForgotView.TYPE.USERNAME
+                    ForgotView.TYPE.PASSWORD -> ForgotView.TYPE.PASSWORD
+                    ForgotView.TYPE.PHONE -> ForgotView.TYPE.PHONE
+                    else -> ForgotView.TYPE.PHONE
+                }
             }
         }
     }
 
     private fun initView() {
-        val otpDesc = String.format(getString(R.string.otp_desc), phoneNumber)
+        val otpDesc = if (type == TYPE.FORGOT) {
+            if (forgotType == ForgotView.TYPE.PHONE) {
+                String.format(getString(R.string.otp_desc_email), email)
+            } else {
+                String.format(getString(R.string.otp_desc), phoneNumber)
+            }
+        } else {
+            String.format(getString(R.string.otp_desc), phoneNumber)
+        }
         binding.otpTitle.text = setSpannable(otpDesc, phoneNumber)
         binding.customToolbar.apply {
             setPadding(0, getStatusBarHeight(), 0, 0)
@@ -147,7 +167,11 @@ class OtpView : BaseActivity(), AuthInterface {
             setCountDown(getString(R.string.otp_countdown), true, expiredTime)
             setListener(object : CustomOTPInput.InputOTPListener {
                 override fun resendOtp() {
-                    presenter.sendOtp(OTP(phoneNumber = phoneNumber, isResend = true))
+                    if (forgotType == ForgotView.TYPE.PHONE) {
+                        presenter.sendOtpEmail(OTP(email = email, isResend = true))
+                    } else {
+                        presenter.sendOtp(OTP(phoneNumber = phoneNumber, isResend = true))
+                    }
                 }
             })
         }

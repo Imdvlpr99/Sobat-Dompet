@@ -17,8 +17,6 @@ interface AuthInterface: BaseView {
 
     fun onSuccessVerifyOtp(data: OTP) {}
 
-    fun onSuccessSendEmailOtp(data: OTP) {}
-
     fun onSuccessLogin(login: Login) {}
 
     fun onSuccessRegister() {}

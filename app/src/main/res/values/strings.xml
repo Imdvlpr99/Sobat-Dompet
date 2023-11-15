@@ -62,6 +62,7 @@
     <!-- OTP -->
     <string name="otp_title">Verifikasi OTP</string>
     <string name="otp_desc">Kode OTP telah dikirimkan melalui WhatsApp ke nomor %1$s</string>
+    <string name="otp_desc_email">Kode OTP telah dikirimkan melalui email ke %1$s</string>
     <string name="otp_info">Tidak menerima Kode OTP? Kirim Ulang OTP</string>
     <string name="otp_resend">Kirim Ulang OTP</string>
     <string name="otp_countdown">Kirim ulang kode OTP dalam %1$s</string>
