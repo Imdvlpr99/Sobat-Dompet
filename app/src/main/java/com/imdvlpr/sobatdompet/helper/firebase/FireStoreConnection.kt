@@ -139,22 +139,44 @@ class FireStoreConnection(val context: Context) {
     }
 
     fun forgot(forgot: Forgot, callback: (Forgot, StatusResponse) -> Unit) {
-        database.collection(Constants.COLLECTION.USERS)
-            .whereEqualTo(Constants.PARAM.PHONE, forgot.phone)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful && task.result != null && task.result.documents.size > 0) {
-                    val documentSnapshot = task.result.documents[0]
-                    val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
-                    if (forgot.email == email) {
-                        callback(Forgot(docId = documentSnapshot.id, phone = forgot.phone), StatusResponse(true, context.getString(R.string.response_forgot_success)))
-                    } else {
-                        callback(Forgot(), StatusResponse(false, context.getString(R.string.response_forgot_email_invalid)))
+        when (forgot.forgotType) {
+            ForgotView.TYPE.USERNAME, ForgotView.TYPE.PASSWORD -> {
+                database.collection(Constants.COLLECTION.USERS)
+                    .whereEqualTo(Constants.PARAM.PHONE, forgot.phone)
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful && task.result != null && task.result.documents.size > 0) {
+                            val documentSnapshot = task.result.documents[0]
+                            val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
+                            if (forgot.email == email) {
+                                callback(Forgot(docId = documentSnapshot.id, phone = forgot.phone), StatusResponse(true, context.getString(R.string.response_forgot_success)))
+                            } else {
+                                callback(Forgot(), StatusResponse(false, context.getString(R.string.response_forgot_email_invalid)))
+                            }
+                        } else {
+                            callback(Forgot(), StatusResponse(false, context.getString(R.string.response_login_not_registered)))
+                        }
                     }
-                } else {
-                    callback(Forgot(), StatusResponse(false, context.getString(R.string.response_login_not_registered)))
-                }
             }
+            ForgotView.TYPE.PHONE -> {
+                database.collection(Constants.COLLECTION.USERS)
+                    .whereEqualTo(Constants.PARAM.USER_NAME, forgot.userName)
+                    .get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful && task.result != null && task.result.documents.size > 0) {
+                            val documentSnapshot = task.result.documents[0]
+                            val email = context.decrypt(documentSnapshot.getString(Constants.PREF.EMAIL).toString())
+                            if (forgot.email == email) {
+                                callback(Forgot(docId = documentSnapshot.id, email = email), StatusResponse(true, context.getString(R.string.response_forgot_success)))
+                            } else {
+                                callback(Forgot(), StatusResponse(false, context.getString(R.string.response_forgot_email_invalid)))
+                            }
+                        } else {
+                            callback(Forgot(), StatusResponse(false, context.getString(R.string.response_login_not_registered)))
+                        }
+                    }
+            }
+        }
     }
 
     fun updateAccountCredential(forgot: Forgot, callback: (StatusResponse) -> Unit) {

@@ -58,6 +58,7 @@ class ForgotView : BaseActivity(), ForgotInterface {
             else -> TYPE.USERNAME
         }
 
+        forgot.forgotType = forgotType
         when (forgotType) {
             TYPE.USERNAME, TYPE.PASSWORD -> {
                 binding.inputPhone.setVisible(true)
@@ -152,9 +153,9 @@ class ForgotView : BaseActivity(), ForgotInterface {
 
     override fun onSuccessForgot(forgot: Forgot) {
         this.forgot.docId = forgot.docId
-        if (!isFinishing) {
-            presenter.sendOtp(OTP(phoneNumber = forgot.phone))
-            presenter.sendOtpEmail(OTP(email = forgot.email))
+        if (!isFinishing) when (forgotType) {
+            TYPE.USERNAME, TYPE.PASSWORD -> presenter.sendOtp(OTP(phoneNumber = forgot.phone))
+            TYPE.PHONE -> presenter.sendOtpEmail(OTP(email = forgot.email))
         }
     }
 
