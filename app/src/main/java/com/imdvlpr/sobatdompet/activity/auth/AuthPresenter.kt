@@ -17,6 +17,7 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
     private var api: Api? = null
     private var fireStoreConnection: FireStoreConnection? = null
     private var dispatchGroup: DispatchGroup? = null
+    private var mainHandler = Handler(Looper.getMainLooper())
 
     override fun onAttach(view: AuthInterface) {
         this.view = view
@@ -35,7 +36,6 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         dispatchGroup?.enter()
 
         api?.sendOtp(data) { response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when(response.isSuccess) {
                     true -> view?.onSuccessSendOtp(response)
@@ -46,12 +46,25 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         }
     }
 
+    fun sendOtpEmail(data: OTP) {
+        view?.onProgress()
+        dispatchGroup?.enter()
+
+        api?.sendOtpEmail(data) { response ->
+            mainHandler.postDelayed({
+                when (response.isSuccess) {
+                    true -> view?.onSuccessSendOtp(response)
+                    else -> view?.onFailed(response.message)
+                }
+            }, 2000)
+        }
+    }
+
     fun verifyOtp(data: OTP) {
         view?.onProgress()
         dispatchGroup?.enter()
 
         api?.verifyEmail(data) { response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when (response.isSuccess) {
                     true -> view?.onSuccessVerifyOtp(response)
@@ -67,7 +80,6 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         dispatchGroup?.enter()
 
         fireStoreConnection?.checkUsers(register) { response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when(response.isSuccess) {
                     true -> view?.onSuccessCheckUsers(response)
@@ -83,7 +95,6 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         dispatchGroup?.enter()
 
         fireStoreConnection?.registerUser(register) { response ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when(response.isSuccess) {
                     true -> view?.onSuccessRegister()
@@ -99,7 +110,6 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         dispatchGroup?.enter()
 
         fireStoreConnection?.loginUsername(login) { data, statusResponse ->
-            val mainHandler = Handler(Looper.getMainLooper())
             mainHandler.postDelayed({
                 when (statusResponse.isSuccess) {
                     true -> view?.onSuccessLogin(data)

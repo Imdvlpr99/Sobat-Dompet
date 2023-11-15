@@ -1,5 +1,6 @@
 package com.imdvlpr.sobatdompet.helper.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
@@ -17,6 +18,7 @@ import com.imdvlpr.sobatdompet.model.Forgot
 
 private lateinit var dialog: Dialog
 
+@SuppressLint("InflateParams")
 fun Activity.datePickerDialog(listener: DatePickerDialog? = null) {
     dialog = Dialog(this, R.style.DialogSlideAnimFullWidth)
     val binding = DialogDatepickerBinding.bind(layoutInflater.inflate(R.layout.dialog_datepicker, null))
@@ -31,6 +33,7 @@ fun Activity.datePickerDialog(listener: DatePickerDialog? = null) {
     dialog.show()
 }
 
+@SuppressLint("InflateParams")
 fun Activity.responseDialog(isSuccess:Boolean, responseDesc: String, responseIcon: Int = R.drawable.ic_error,
                             responseBtnText: String = getString(R.string.response_button_ok), listener: ResponseDialogListener? = null) {
     dialog = Dialog(this, R.style.DialogSlideAnimFullWidth)
@@ -51,6 +54,7 @@ fun Activity.responseDialog(isSuccess:Boolean, responseDesc: String, responseIco
     dialog.show()
 }
 
+@SuppressLint("InflateParams")
 fun Activity.updateDialog(type: ForgotView.TYPE, listener: UpdateDialogListener? = null) {
     dialog = Dialog(this, R.style.DialogSlideAnimFullWidth)
     val binding = DialogUpdateCredentialBinding.bind(layoutInflater.inflate(R.layout.dialog_update_credential, null))
