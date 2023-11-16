@@ -3,12 +3,10 @@ package com.imdvlpr.sobatdompet.activity.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.imdvlpr.sobatdompet.activity.auth.LoginView
 import com.imdvlpr.sobatdompet.databinding.ActivityMainBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomBottomBar
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
-import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
 
 class MainActivity : BaseActivity(), MainInterface {
 
