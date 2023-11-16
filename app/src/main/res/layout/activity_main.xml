@@ -7,22 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".activity.main.MainActivity">
 
-    <com.imdvlpr.sobatdompet.helper.ui.CustomHomeHeader
-        android:id="@+id/customHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <FrameLayout
+        android:id="@+id/frameContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logoutBtn"
-        style="@style/MaterialButton.Style"
+    <com.imdvlpr.sobatdompet.helper.ui.CustomBottomBar
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="20dp"
-        android:text="@string/logout_title"
-        app:cornerRadius="15dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

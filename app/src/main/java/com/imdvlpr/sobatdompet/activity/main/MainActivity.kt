@@ -3,11 +3,10 @@ package com.imdvlpr.sobatdompet.activity.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.imdvlpr.sobatdompet.activity.auth.LoginView
 import com.imdvlpr.sobatdompet.databinding.ActivityMainBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
+import com.imdvlpr.sobatdompet.helper.ui.CustomBottomBar
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
-import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
 
 class MainActivity : BaseActivity(), MainInterface {
 
@@ -31,21 +30,20 @@ class MainActivity : BaseActivity(), MainInterface {
     }
 
     private fun initView() {
-        binding.customHeader.apply {
-            setPadding(0, getStatusBarHeight(), 0, 0)
-            setUserData("John Doe")
-        }
-
-        binding.logoutBtn.setOnClickListener {
-            presenter.logout()
+        binding.bottomBar.apply {
+            setSelectedMenu(1)
+            setListener(navListener)
         }
     }
 
-    override fun onSuccessLogout() {
-        if (!isFinishing) {
-            startActivity(LoginView.intentClear(this))
-            finish()
+    private var navListener = object : CustomBottomBar.BottomBarListener {
+        override fun onMenuCLick(position: Int) {
+
         }
+
+        override fun onCenterMenuClick() {
+        }
+
     }
 
     override fun onProgress() {
