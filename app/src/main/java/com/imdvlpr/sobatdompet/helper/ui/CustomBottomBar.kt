@@ -29,23 +29,23 @@ class CustomBottomBar: ConstraintLayout {
         binding = LayoutBottomBarBinding.bind(LayoutInflater.from(context).inflate(R.layout.layout_bottom_bar, this, true))
 
         binding.homeBtn.setOnClickListener {
+            setSelected(0)
+            listener?.onMenuCLick(0)
+        }
+
+        binding.statsBtn.setOnClickListener {
             setSelected(1)
             listener?.onMenuCLick(1)
         }
 
-        binding.statsBtn.setOnClickListener {
+        binding.cardsBtn.setOnClickListener {
             setSelected(2)
             listener?.onMenuCLick(2)
         }
 
-        binding.cardsBtn.setOnClickListener {
+        binding.profileBtn.setOnClickListener {
             setSelected(3)
             listener?.onMenuCLick(3)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            setSelected(4)
-            listener?.onMenuCLick(4)
         }
 
         binding.scanBtn.setOnClickListener {
@@ -55,25 +55,25 @@ class CustomBottomBar: ConstraintLayout {
 
     private fun setSelected(position: Int) {
         when (position) {
-            1 -> {
+            0 -> {
                 binding.homeIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home_fill))
                 binding.statsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_stats))
                 binding.cardsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cards))
                 binding.userIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_user))
             }
-            2 -> {
+            1 -> {
                 binding.homeIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home))
                 binding.statsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_stats_fill))
                 binding.cardsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cards))
                 binding.userIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_user))
             }
-            3 -> {
+            2 -> {
                 binding.homeIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home))
                 binding.statsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_stats))
                 binding.cardsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cards_fill))
                 binding.userIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_user))
             }
-            4 -> {
+            3 -> {
                 binding.homeIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home))
                 binding.statsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_stats))
                 binding.cardsIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cards))

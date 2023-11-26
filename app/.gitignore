@@ -8,3 +8,4 @@ build/
 local.properties
 *.iml
 .idea/
+.idea

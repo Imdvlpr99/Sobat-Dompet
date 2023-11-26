@@ -1,6 +1,7 @@
 package com.imdvlpr.sobatdompet.helper.ui
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +13,7 @@ import com.imdvlpr.sobatdompet.databinding.LayoutHomeHeaderBinding
 class CustomHomeHeader: ConstraintLayout {
 
     private lateinit var binding: LayoutHomeHeaderBinding
+    private var listener: HomeHeaderListener? = null
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -29,17 +31,25 @@ class CustomHomeHeader: ConstraintLayout {
         binding = LayoutHomeHeaderBinding.bind(LayoutInflater.from(context).inflate(R.layout.layout_home_header, this, true))
     }
 
-    fun setUserData(userName: String, userImg: Int? = null) {
+    fun setUserData(userName: String, userImg: Bitmap? = null) {
         binding.userName.text = userName
         if (userImg == null) {
-            Glide.with(context).load(R.drawable.ic_user_color).into(binding.userImage)
+            Glide.with(context).load(R.drawable.ic_user_placeholder).into(binding.userImage)
         } else {
             Glide.with(context)
                 .load(userImg)
-                .error(R.drawable.ic_user_color)
-                .placeholder(R.drawable.ic_user_color)
+                .error(R.drawable.ic_user_placeholder)
+                .placeholder(R.drawable.ic_user_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true).into(binding.userImage)
         }
+    }
+
+    fun setListener(listener: HomeHeaderListener) {
+        this.listener = listener
+    }
+
+    interface HomeHeaderListener {
+        fun onNotificationClick()
     }
 }

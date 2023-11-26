@@ -51,7 +51,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/userInfoTitle" />
 
-            <com.imdvlpr.sobatdompet.helper.ui.CustomInsertImage
+            <com.imdvlpr.sobatdompet.helper.ui.CustomUserImage
                 android:id="@+id/insertImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
