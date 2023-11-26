@@ -12,19 +12,22 @@
         android:layout_height="50dp"
         android:layout_marginVertical="15dp"
         android:layout_marginHorizontal="20dp"
-        android:src="@drawable/ic_user_color"
+        android:src="@drawable/ic_user_placeholder"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/greetings"
-        style="@style/TextView.Regular14sp"
+        style="@style/TextView.Regular12sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/notification"
+        android:text="@string/welcome_back"
+        android:textColor="@color/darkGray"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout3"
         app:layout_constraintStart_toEndOf="@+id/userImage"
         app:layout_constraintTop_toTopOf="@+id/userImage" />
 
@@ -33,19 +36,33 @@
         style="@style/TextView.Semibold18sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="John Doe"
         app:layout_constraintEnd_toEndOf="@+id/greetings"
         app:layout_constraintStart_toStartOf="@+id/greetings"
         app:layout_constraintTop_toBottomOf="@+id/greetings" />
 
-    <ImageView
-        android:id="@+id/notification"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_bell_normal"
+        android:background="@drawable/bg_circle_stroke_dark_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/notification"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_notification"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/blue"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

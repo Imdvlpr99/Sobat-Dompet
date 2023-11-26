@@ -98,6 +98,10 @@
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="TextView.Regular12sp">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="TextView.Regular16sp">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">16sp</item>

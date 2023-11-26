@@ -6,4 +6,8 @@
     <color name="blue">#407BFF</color>
     <color name="blueSoft">#64ACFF</color>
     <color name="gray">#EFEEF0</color>
+    <color name="darkGray">#9CA4AB</color>
+    <color name="darkWhite">#cccccc</color>
+    <color name="green">#02AA4B</color>
+    <color name="purple">#4C3494</color>
 </resources>

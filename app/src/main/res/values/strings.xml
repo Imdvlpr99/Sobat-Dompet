@@ -3,6 +3,7 @@
     <string name="title_example">Username :</string>
     <string name="continue_text">Lanjutkan</string>
     <string name="indonesia_number_suffix">+62</string>
+    <string name="welcome_back">Selamat Datang</string>
 
     <!-- Onboarding -->
     <string name="onboarding_text_1">Transaksi aman dari semua rekening bank dan e-wallet dalam satu platform</string>
@@ -126,6 +127,14 @@
     <string name="login_create_account">Daftar Sekarang</string>
     <string name="login_need_help">Butuh Bantuan?</string>
     <string name="login_contact_services">Pusat Bantuan</string>
+
+    <!-- Home -->
+    <string name="home_balance">Saldo</string>
+    <string name="home_account_not_available">Anda belum menambahkan akun e-wallet Anda, tambahkan sekarang</string>
+    <string name="home_add_account">Tambah Akun</string>
+
+    <!-- Profil -->
+    <string name="profile_toolbar_title">Profil</string>
 
     <!-- Logout -->
     <string name="logout_title">Keluar</string>

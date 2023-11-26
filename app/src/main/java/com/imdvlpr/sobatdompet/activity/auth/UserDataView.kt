@@ -15,7 +15,7 @@ import com.imdvlpr.sobatdompet.R
 import com.imdvlpr.sobatdompet.databinding.ActivityUserDataBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomInputView
-import com.imdvlpr.sobatdompet.helper.ui.CustomInsertImage
+import com.imdvlpr.sobatdompet.helper.ui.CustomUserImage
 import com.imdvlpr.sobatdompet.helper.ui.CustomToolbar
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
 import com.imdvlpr.sobatdompet.helper.utils.DatePickerListener
@@ -72,7 +72,7 @@ class UserDataView : BaseActivity(), AuthInterface {
         }
 
         binding.insertImage.apply {
-            setListener(object : CustomInsertImage.InsertImageListener {
+            setListener(object : CustomUserImage.InsertImageListener {
                 override fun onCameraClicked() {
                     val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
