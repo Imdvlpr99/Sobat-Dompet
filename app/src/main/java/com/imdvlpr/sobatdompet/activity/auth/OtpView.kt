@@ -22,6 +22,7 @@ import com.imdvlpr.sobatdompet.model.Forgot
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.Register
+import org.koin.android.ext.android.inject
 
 class OtpView : BaseActivity(), AuthInterface {
 
@@ -58,7 +59,7 @@ class OtpView : BaseActivity(), AuthInterface {
     }
 
     private lateinit var binding: ActivityOtpBinding
-    private lateinit var presenter: AuthPresenter
+    private val presenter: AuthPresenter by inject()
     private var sharedPreference: SharedPreference = SharedPreference()
     private var register = Register()
     private var login = Login()
@@ -244,7 +245,6 @@ class OtpView : BaseActivity(), AuthInterface {
     }
 
     override fun onAttach() {
-        presenter = AuthPresenter(this)
         presenter.onAttach(this)
     }
 

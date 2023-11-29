@@ -26,6 +26,7 @@ import com.imdvlpr.sobatdompet.helper.utils.showDatePicker
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.Register
 import com.imdvlpr.sobatdompet.model.StatusResponse
+import org.koin.android.ext.android.inject
 import java.io.InputStream
 
 class UserDataView : BaseActivity(), AuthInterface {
@@ -42,7 +43,7 @@ class UserDataView : BaseActivity(), AuthInterface {
     }
 
     private lateinit var binding: ActivityUserDataBinding
-    private lateinit var presenter: AuthPresenter
+    private val presenter: AuthPresenter by inject()
     private var register = Register()
     private var encodedImage: String? = null
 
@@ -194,7 +195,6 @@ class UserDataView : BaseActivity(), AuthInterface {
     }
 
     override fun onAttach() {
-        presenter = AuthPresenter(this)
         presenter.onAttach(this)
     }
 

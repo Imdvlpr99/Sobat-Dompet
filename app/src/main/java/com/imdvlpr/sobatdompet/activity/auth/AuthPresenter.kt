@@ -1,28 +1,18 @@
 package com.imdvlpr.sobatdompet.activity.auth
 
-import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import com.imdvlpr.sobatdompet.helper.firebase.FireStoreConnection
 import com.imdvlpr.sobatdompet.helper.network.Api
 import com.imdvlpr.sobatdompet.helper.utils.DispatchGroup
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.Register
-import com.imdvlpr.weatherappp.helper.base.BasePresenter
+import kotlinx.coroutines.launch
+import net.ist.btn.shared.base.BaseCoPresenter
 
-class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface> {
-
-    var view: AuthInterface? = null
-    private var api: Api? = null
-    private var fireStoreConnection: FireStoreConnection? = null
-    private var dispatchGroup: DispatchGroup? = null
-    private var mainHandler = Handler(Looper.getMainLooper())
+class AuthPresenter(private val api: Api, private val fireStoreConnection: FireStoreConnection) : BaseCoPresenter<AuthInterface>() {
 
     override fun onAttach(view: AuthInterface) {
-        this.view = view
-        if (api == null) api = Api(context)
-        if (fireStoreConnection == null) fireStoreConnection = FireStoreConnection(context)
+        super.onAttach(view)
         if (dispatchGroup == null) {
             dispatchGroup = DispatchGroup()
             dispatchGroup?.notify { view.onFinishProgress() }
@@ -35,14 +25,14 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        api?.sendOtp(data) { response ->
-            mainHandler.postDelayed({
+        api.sendOtp(data) { response ->
+            launch {
                 when(response.isSuccess) {
                     true -> view?.onSuccessSendOtp(response)
                     else -> view?.onFailed(response.message)
                 }
                 dispatchGroup?.leave()
-            }, 2000)
+            }
         }
     }
 
@@ -50,13 +40,14 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        api?.sendOtpEmail(data) { response ->
-            mainHandler.postDelayed({
+        api.sendOtpEmail(data) { response ->
+            launch {
                 when (response.isSuccess) {
                     true -> view?.onSuccessSendOtp(response)
                     else -> view?.onFailed(response.message)
                 }
-            }, 2000)
+                dispatchGroup?.leave()
+            }
         }
     }
 
@@ -64,14 +55,14 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        api?.verifyEmail(data) { response ->
-            mainHandler.postDelayed({
+        api.verifyEmail(data) { response ->
+            launch {
                 when (response.isSuccess) {
                     true -> view?.onSuccessVerifyOtp(response)
                     false -> view?.onFailed(response.message)
                 }
                 dispatchGroup?.leave()
-            }, 2000)
+            }
         }
     }
 
@@ -79,14 +70,14 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        fireStoreConnection?.checkUsers(register) { response ->
-            mainHandler.postDelayed({
+        fireStoreConnection.checkUsers(register) { response ->
+            launch {
                 when(response.isSuccess) {
                     true -> view?.onSuccessCheckUsers(response)
                     false -> view?.onFailed(response.message)
                 }
                 dispatchGroup?.leave()
-            }, 2000)
+            }
         }
     }
 
@@ -94,14 +85,14 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        fireStoreConnection?.registerUser(register) { response ->
-            mainHandler.postDelayed({
+        fireStoreConnection.registerUser(register) { response ->
+            launch {
                 when(response.isSuccess) {
                     true -> view?.onSuccessRegister()
                     false -> view?.onFailed(response.message)
                 }
                 dispatchGroup?.leave()
-            }, 2000)
+            }
         }
     }
 
@@ -109,14 +100,14 @@ class AuthPresenter(private val context: Context) : BasePresenter<AuthInterface>
         view?.onProgress()
         dispatchGroup?.enter()
 
-        fireStoreConnection?.loginUsername(login) { data, statusResponse ->
-            mainHandler.postDelayed({
+        fireStoreConnection.loginUsername(login) { data, statusResponse ->
+            launch {
                 when (statusResponse.isSuccess) {
                     true -> view?.onSuccessLogin(data)
                     false -> view?.onFailed(statusResponse.message)
                 }
                 dispatchGroup?.leave()
-            }, 2000)
+            }
         }
     }
 }
