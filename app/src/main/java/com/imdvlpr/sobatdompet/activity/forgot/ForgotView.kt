@@ -22,6 +22,7 @@ import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
 import com.imdvlpr.sobatdompet.helper.utils.setVisible
 import com.imdvlpr.sobatdompet.model.Forgot
 import com.imdvlpr.sobatdompet.model.OTP
+import org.koin.android.ext.android.inject
 
 class ForgotView : BaseActivity(), ForgotInterface {
 
@@ -37,7 +38,7 @@ class ForgotView : BaseActivity(), ForgotInterface {
     }
 
     private lateinit var binding: ActivityForgotBinding
-    private lateinit var presenter: ForgotPresenter
+    private val presenter: ForgotPresenter by inject()
     private var forgotType: TYPE = TYPE.USERNAME
     private var forgot = Forgot()
 
@@ -187,7 +188,6 @@ class ForgotView : BaseActivity(), ForgotInterface {
     }
 
     override fun onAttach() {
-        presenter = ForgotPresenter(this)
         presenter.onAttach(this)
     }
 

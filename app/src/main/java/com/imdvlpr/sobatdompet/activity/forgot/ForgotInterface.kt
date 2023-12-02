@@ -2,7 +2,7 @@ package com.imdvlpr.sobatdompet.activity.forgot
 
 import com.imdvlpr.sobatdompet.model.Forgot
 import com.imdvlpr.sobatdompet.model.OTP
-import com.imdvlpr.weatherappp.helper.base.BaseView
+import com.imdvlpr.sobatdompet.helper.base.BaseView
 
 interface ForgotInterface: BaseView {
 

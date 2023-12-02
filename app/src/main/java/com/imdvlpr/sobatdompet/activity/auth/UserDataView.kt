@@ -201,4 +201,9 @@ class UserDataView : BaseActivity(), AuthInterface {
     override fun onDetach() {
         presenter.onDetach()
     }
+
+    override fun onDestroy() {
+        onDetach()
+        super.onDestroy()
+    }
 }

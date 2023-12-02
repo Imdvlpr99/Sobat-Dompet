@@ -13,6 +13,7 @@ import com.imdvlpr.sobatdompet.databinding.ActivityMainBinding
 import com.imdvlpr.sobatdompet.helper.base.BaseActivity
 import com.imdvlpr.sobatdompet.helper.ui.CustomBottomBar
 import com.imdvlpr.sobatdompet.helper.ui.responseDialog
+import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity(), MainInterface {
 
@@ -25,7 +26,7 @@ class MainActivity : BaseActivity(), MainInterface {
     }
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var presenter: MainPresenter
+    private val presenter: MainPresenter by inject()
     private lateinit var fragmentHome: HomeView
     private lateinit var fragmentStats: StatsView
     private lateinit var fragmentCards: CardsView
@@ -109,7 +110,6 @@ class MainActivity : BaseActivity(), MainInterface {
     }
 
     override fun onAttach() {
-        presenter = MainPresenter(this)
         presenter.onAttach(this)
     }
 

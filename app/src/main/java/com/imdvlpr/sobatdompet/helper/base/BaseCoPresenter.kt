@@ -1,7 +1,7 @@
 package net.ist.btn.shared.base
 
 import com.imdvlpr.sobatdompet.helper.utils.DispatchGroup
-import com.imdvlpr.weatherappp.helper.base.BaseView
+import com.imdvlpr.sobatdompet.helper.base.BaseView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

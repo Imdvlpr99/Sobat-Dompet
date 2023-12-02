@@ -221,6 +221,7 @@ class OtpView : BaseActivity(), AuthInterface {
     }
 
     override fun onDestroy() {
+        onDetach()
         super.onDestroy()
         binding.inputOTP.cancelTimer()
     }
