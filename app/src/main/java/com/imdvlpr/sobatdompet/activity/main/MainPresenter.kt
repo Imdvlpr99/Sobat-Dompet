@@ -1,12 +1,8 @@
 package com.imdvlpr.sobatdompet.activity.main
 
-import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import com.imdvlpr.sobatdompet.helper.firebase.FireStoreConnection
 import com.imdvlpr.sobatdompet.helper.network.Api
 import com.imdvlpr.sobatdompet.helper.utils.DispatchGroup
-import com.imdvlpr.sobatdompet.helper.base.BasePresenter
 import kotlinx.coroutines.launch
 import net.ist.btn.shared.base.BaseCoPresenter
 
