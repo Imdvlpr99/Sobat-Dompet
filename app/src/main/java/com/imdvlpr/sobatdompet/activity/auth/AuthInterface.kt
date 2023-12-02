@@ -3,7 +3,7 @@ package com.imdvlpr.sobatdompet.activity.auth
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
 import com.imdvlpr.sobatdompet.model.StatusResponse
-import com.imdvlpr.weatherappp.helper.base.BaseView
+import com.imdvlpr.sobatdompet.helper.base.BaseView
 
 interface AuthInterface: BaseView {
 

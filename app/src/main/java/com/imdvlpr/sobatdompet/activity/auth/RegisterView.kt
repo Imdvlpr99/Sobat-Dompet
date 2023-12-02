@@ -15,6 +15,7 @@ import com.imdvlpr.sobatdompet.helper.ui.responseDialog
 import com.imdvlpr.sobatdompet.helper.utils.getStatusBarHeight
 import com.imdvlpr.sobatdompet.model.Register
 import com.imdvlpr.sobatdompet.model.StatusResponse
+import org.koin.android.ext.android.inject
 
 class RegisterView : BaseActivity(), AuthInterface {
 
@@ -25,7 +26,7 @@ class RegisterView : BaseActivity(), AuthInterface {
     }
 
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var presenter: AuthPresenter
+    private val presenter: AuthPresenter by inject()
     private var register = Register()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,11 +146,15 @@ class RegisterView : BaseActivity(), AuthInterface {
     }
 
     override fun onAttach() {
-        presenter = AuthPresenter(this)
         presenter.onAttach(this)
     }
 
     override fun onDetach() {
         presenter.onDetach()
+    }
+
+    override fun onDestroy() {
+        onDetach()
+        super.onDestroy()
     }
 }

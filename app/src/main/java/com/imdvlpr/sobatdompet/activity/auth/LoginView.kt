@@ -21,6 +21,7 @@ import com.imdvlpr.sobatdompet.helper.utils.setTheme
 import com.imdvlpr.sobatdompet.helper.utils.setVisible
 import com.imdvlpr.sobatdompet.model.Login
 import com.imdvlpr.sobatdompet.model.OTP
+import org.koin.android.ext.android.inject
 
 class LoginView : BaseActivity(), AuthInterface {
 
@@ -38,7 +39,7 @@ class LoginView : BaseActivity(), AuthInterface {
 
     enum class TYPE { USERNAME, PHONE }
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var presenter: AuthPresenter
+    private val presenter: AuthPresenter by inject()
     private var login = Login()
     private var loginType: TYPE = TYPE.USERNAME
     private var phoneNumber: String = ""
@@ -198,11 +199,15 @@ class LoginView : BaseActivity(), AuthInterface {
     }
 
     override fun onAttach() {
-        presenter = AuthPresenter(this)
         presenter.onAttach(this)
     }
 
     override fun onDetach() {
         presenter.onDetach()
+    }
+
+    override fun onDestroy() {
+        onDetach()
+        super.onDestroy()
     }
 }

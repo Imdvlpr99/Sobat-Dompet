@@ -13,9 +13,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.appcompat.app.AppCompatActivity
 import com.imdvlpr.sobatdompet.R
+import com.imdvlpr.sobatdompet.di.appModule
+import com.imdvlpr.sobatdompet.di.mvpModule
 import com.imdvlpr.sobatdompet.helper.utils.BetterActivityResult
 import com.imdvlpr.sobatdompet.helper.utils.setLocale
 import com.imdvlpr.sobatdompet.helper.utils.setWindowFlag
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 open class BaseActivity: AppCompatActivity() {
 
@@ -24,6 +28,10 @@ open class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startKoin {
+            androidContext(this@BaseActivity)
+            modules(appModule, mvpModule)
+        }
         initWindow()
         initProgress()
         onBackPressedDispatcher.addCallback(this, callback)

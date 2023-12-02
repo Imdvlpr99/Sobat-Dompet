@@ -1,4 +1,4 @@
-package com.imdvlpr.weatherappp.helper.base
+package com.imdvlpr.sobatdompet.helper.base
 
 interface BaseView {
     fun onAttach()

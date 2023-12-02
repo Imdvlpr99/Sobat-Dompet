@@ -1,6 +1,6 @@
 package com.imdvlpr.sobatdompet.activity.main
 
-import com.imdvlpr.weatherappp.helper.base.BaseView
+import com.imdvlpr.sobatdompet.helper.base.BaseView
 
 interface MainInterface: BaseView {
 
