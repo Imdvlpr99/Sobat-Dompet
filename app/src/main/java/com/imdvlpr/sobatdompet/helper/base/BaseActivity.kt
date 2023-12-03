@@ -20,6 +20,7 @@ import com.imdvlpr.sobatdompet.helper.utils.setLocale
 import com.imdvlpr.sobatdompet.helper.utils.setWindowFlag
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.dsl.koinApplication
 
 open class BaseActivity: AppCompatActivity() {
 
@@ -28,10 +29,6 @@ open class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startKoin {
-            androidContext(this@BaseActivity)
-            modules(appModule, mvpModule)
-        }
         initWindow()
         initProgress()
         onBackPressedDispatcher.addCallback(this, callback)
@@ -60,6 +57,13 @@ open class BaseActivity: AppCompatActivity() {
 
     fun showProgress() { if (!isFinishing && dialogProgress?.isShowing == false) dialogProgress?.show() }
     fun hideProgress() { if (!isFinishing && dialogProgress?.isShowing == true) dialogProgress?.dismiss() }
+
+    fun startKoin() {
+        startKoin {
+            androidContext(this@BaseActivity)
+            modules(appModule, mvpModule)
+        }
+    }
 
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
