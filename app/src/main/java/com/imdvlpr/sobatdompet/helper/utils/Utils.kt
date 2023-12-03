@@ -20,7 +20,10 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -170,6 +173,51 @@ fun Context.setSpannable(
     }
 
     return spannable
+}
+
+fun Context.isBiometricAvailable(): Boolean {
+    return BiometricManager.from(this).canAuthenticate(
+        BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
+}
+
+fun createBiometricCallback(
+    onSuccess: () -> Unit,
+    onError: (errorCode: Int, errString: CharSequence) -> Unit,
+    onFailed: () -> Unit
+): BiometricPrompt.AuthenticationCallback {
+    return object : BiometricPrompt.AuthenticationCallback() {
+        override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+            super.onAuthenticationError(errorCode, errString)
+            onError.invoke(errorCode, errString)
+        }
+
+        override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+            super.onAuthenticationSucceeded(result)
+            onSuccess.invoke()
+        }
+
+        override fun onAuthenticationFailed() {
+            super.onAuthenticationFailed()
+            onFailed.invoke()
+        }
+    }
+}
+
+fun showBiometricPrompt(
+    activity: FragmentActivity,
+    onSuccess: () -> Unit,
+    onError: (errorCode: Int, errString: CharSequence) -> Unit,
+    onFailed: () -> Unit
+) {
+    val biometricPrompt = BiometricPrompt(activity, createBiometricCallback(onSuccess, onError, onFailed))
+
+    val promptInfo = BiometricPrompt.PromptInfo.Builder()
+        .setTitle("Biometric Authentication")
+        .setSubtitle("Authenticate using your fingerprint or face")
+        .setNegativeButtonText("Cancel")
+        .build()
+
+    biometricPrompt.authenticate(promptInfo)
 }
 
 interface SpannableListener {
