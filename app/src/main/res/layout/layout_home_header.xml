@@ -55,7 +55,7 @@
             android:id="@+id/notification"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/ic_notification"
+            android:src="@drawable/ic_notification_fill"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

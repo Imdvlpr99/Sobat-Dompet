@@ -110,5 +110,35 @@ class ProfileView : Fragment() {
 
             })
         }
+
+        binding.notificationBtn.apply {
+            setMenuData(getString(R.string.profile_notification), R.drawable.ic_notification)
+            setListener(object : CustomMenu.MenuInterface {
+                override fun onClick() {
+
+                }
+
+            })
+        }
+
+        binding.languageBtn.apply {
+            setMenuData(getString(R.string.profile_language), R.drawable.ic_internet)
+            setListener(object : CustomMenu.MenuInterface {
+                override fun onClick() {
+
+                }
+
+            })
+        }
+
+        binding.helpSupportBtn.apply {
+            setMenuData(getString(R.string.profile_help_support), R.drawable.ic_info)
+            setListener(object : CustomMenu.MenuInterface {
+                override fun onClick() {
+
+                }
+
+            })
+        }
     }
 }
