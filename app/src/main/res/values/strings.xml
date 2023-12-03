@@ -135,6 +135,13 @@
 
     <!-- Profil -->
     <string name="profile_toolbar_title">Profil</string>
+    <string name="profile_personal_info_section">Informasi Pribadi</string>
+    <string name="profile_security_section">Keamanan</string>
+    <string name="profile_your_profile">Profil Kamu</string>
+    <string name="profile_history_transaction">Riwayat Transaksi</string>
+    <string name="profile_biometric">Sidik Jari</string>
+    <string name="profile_change_password">Ubah Password</string>
+    <string name="profile_forgot_password">Lupa Password</string>
 
     <!-- Logout -->
     <string name="logout_title">Keluar</string>

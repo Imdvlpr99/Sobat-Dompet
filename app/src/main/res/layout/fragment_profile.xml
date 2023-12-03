@@ -36,6 +36,69 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/personalInfoLbl"
+                style="@style/TextView.Semibold14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/profile_personal_info_section"
+                android:textColor="@color/darkGray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userImageData" />
+
+            <com.imdvlpr.sobatdompet.helper.ui.CustomMenu
+                android:id="@+id/profileBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/personalInfoLbl" />
+
+            <com.imdvlpr.sobatdompet.helper.ui.CustomMenu
+                android:id="@+id/transactionHistoryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileBtn" />
+
+            <TextView
+                android:id="@+id/securityLbl"
+                style="@style/TextView.Semibold14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/profile_security_section"
+                android:textColor="@color/darkGray"
+                app:layout_constraintStart_toStartOf="@+id/personalInfoLbl"
+                app:layout_constraintTop_toBottomOf="@+id/transactionHistoryBtn" />
+
+            <com.imdvlpr.sobatdompet.helper.ui.CustomMenu
+                android:id="@+id/biometricBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/securityLbl" />
+
+            <com.imdvlpr.sobatdompet.helper.ui.CustomMenu
+                android:id="@+id/changePasswordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/biometricBtn" />
+
+            <com.imdvlpr.sobatdompet.helper.ui.CustomMenu
+                android:id="@+id/forgotPasswordBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/changePasswordBtn" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -27,6 +27,7 @@ class SplashScreenView : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        startKoin()
         sessionManager = SharedPreference()
         sessionManager.sharedPreference(this)
         Log.d("test-decrypt", decrypt(encrypt("test encrypt")))
